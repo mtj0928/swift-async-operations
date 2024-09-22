@@ -10,7 +10,7 @@ extension Sequence where Element: Sendable {
                 numberOfConcurrentTasks: numberOfConcurrentTasks,
                 priority: priority,
                 taskOperation: body,
-                nextOperation: { /* Do nothing */}
+                nextOperation: { /* Do nothing */ }
             )
         }
     }

@@ -72,7 +72,6 @@ public struct ThrowingOrderedTaskGroup<ChildTaskResult: Sendable, Failure: Error
 }
 
 extension ThrowingOrderedTaskGroup: AsyncSequence, AsyncIteratorProtocol where Failure: Error {
-
     public typealias Element = ChildTaskResult
 
     public func makeAsyncIterator() -> Self {

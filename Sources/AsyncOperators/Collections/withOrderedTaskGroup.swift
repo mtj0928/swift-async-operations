@@ -58,7 +58,6 @@ public struct OrderedTaskGroup<ChildTaskResult: Sendable> {
 }
 
 extension OrderedTaskGroup: AsyncSequence, AsyncIteratorProtocol {
-
     public typealias Element = ChildTaskResult
     public typealias Failure = Never
 

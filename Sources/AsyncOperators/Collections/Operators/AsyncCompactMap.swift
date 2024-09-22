@@ -1,5 +1,4 @@
 extension Sequence where Element: Sendable {
-
     public func asyncCompactMap<T: Sendable>(
         numberOfConcurrentTasks: UInt = .max,
         priority: TaskPriority? = nil,
