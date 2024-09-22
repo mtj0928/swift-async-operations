@@ -30,6 +30,8 @@ func asyncMapMultipleTasksWithNumberOfConcurrentTasks() async throws {
     #expect(results == [0, 2, 4, 6, 8])
 }
 
+// MARK: - private
+
 private actor Counter {
     private(set) var number = 0
 
