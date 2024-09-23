@@ -5,7 +5,7 @@ import Foundation
 @Test("asyncMap + multiple tasks")
 func asyncMapMultipleTasks() async throws {
     let startTime = Date()
-    let results = try await [0, 1, 2, 3, 4].asyncMap { number in
+    let results = try await [0, 1, 2, 3, 4].asyncMap(numberOfConcurrentTasks: 8) { number in
         try await Task.sleep(for: .seconds(1))
         return number * 2
     }

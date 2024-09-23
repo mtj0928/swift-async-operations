@@ -1,6 +1,6 @@
 extension Sequence where Element: Sendable {
     public func asyncForEach(
-        numberOfConcurrentTasks: UInt = .max,
+        numberOfConcurrentTasks: UInt = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
         _ body: @escaping @Sendable (Element) async throws -> Void
     ) async rethrows {

@@ -1,6 +1,6 @@
 extension Sequence where Element: Sendable {
     public func asyncCompactMap<T: Sendable>(
-        numberOfConcurrentTasks: UInt = .max,
+        numberOfConcurrentTasks: UInt = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> T?
     ) async rethrows -> [T] {

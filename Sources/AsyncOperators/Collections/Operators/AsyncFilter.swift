@@ -1,6 +1,6 @@
 extension Sequence where Element: Sendable {
     public func asyncFilter(
-        numberOfConcurrentTasks: UInt = .max,
+        numberOfConcurrentTasks: UInt = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
         _ isIncluded: @escaping @Sendable (Element) async throws -> Bool
     ) async rethrows -> [Element] {
