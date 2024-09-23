@@ -118,15 +118,15 @@ End: 2
 [2, 4, 6]
 ```
 This library provides
-- `asyncForEach`
-- `asyncMap`
-- `asyncFlatMap`
-- `asyncCompactMap`
-- `asyncFilter`
-- `asyncFirst`
-- `asyncAllSatisfy`
-- `asyncContains`
-- `asyncReduce`
+- [asyncForEach](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncallsatisfy(numberofconcurrenttasks:priority:_:))
+- [asyncMap](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncmap(numberofconcurrenttasks:priority:_:))
+- [asyncFlatMap](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncflatmap(numberofconcurrenttasks:priority:_:))
+- [asyncCompactMap](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asynccompactmap(numberofconcurrenttasks:priority:_:))
+- [asyncFilter](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncfilter(numberofconcurrenttasks:priority:_:))
+- [asyncFirst](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncfirst(numberofconcurrenttasks:priority:where:))
+- [asyncAllSatisfy](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncallsatisfy(numberofconcurrenttasks:priority:_:))
+- [asyncContains](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asynccontains(numberofconcurrenttasks:priority:where:))
+- [asyncReduce](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncreduce(into:_:))
 
 ### Ordered Task Group
 The original utility function `withTaskGroup` and `withThrowingTaskGroup` don't ensure the order of `for await`.
@@ -149,7 +149,7 @@ print(results) // ☹️ [0, 4, 2, 6, 10, 8]
 
 However, ordered `for await` is required in some of situations like converting an array to a new array.
 
-`withOrderedTaskGroup` and `withThrowingOrderedTaskGroup` satisfy such requirements.
+[withOrderedTaskGroup](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncreduce(into:_:)) and [withThrowingOrderedTaskGroup](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/withthrowingorderedtaskgroup(of:returning:isolation:body:)) satisfy such requirements.
 ```swift
 let results = await withOrderedTaskGroup(of: Int.self) { group in
     (0..<5).forEach { number in
