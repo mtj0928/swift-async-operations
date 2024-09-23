@@ -5,7 +5,6 @@ extension Sequence where Element: Sendable {
         where predicate: @escaping @Sendable (Element) async throws -> Bool
     ) async rethrows -> Bool {
         try await withThrowingOrderedTaskGroup(of: Bool.self) { group in
-
             for (index, element) in self.enumerated() {
                 if index >= numberOfConcurrentTasks {
                     if let contain = try await group.next(),

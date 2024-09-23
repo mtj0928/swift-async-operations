@@ -1,13 +1,29 @@
 extension Sequence where Element: Sendable {
     public func asyncFirst(
-        where predicate: @escaping (Element) async throws -> Bool
+        numberOfConcurrentTasks: UInt = numberOfConcurrentTasks,
+        priority: TaskPriority? = nil,
+        where predicate: @escaping @Sendable (Element) async throws -> Bool
     ) async rethrows -> Element? {
-        for element in self {
-            if try await predicate(element) {
-                return element
-            }
-        }
+        try await withThrowingOrderedTaskGroup(of: Element?.self) { group in
+            for (index, element) in self.enumerated() {
+                if index >= numberOfConcurrentTasks {
+                    if let result = try await group.next(), result != nil  {
+                        group.cancelAll()
+                        return result
+                    }
+                }
 
-        return nil
+                group.addTask(priority: priority) {
+                    try await predicate(element) ? element : nil
+                }
+            }
+
+            for try await result in group where result != nil {
+                group.cancelAll()
+                return result
+            }
+
+            return nil
+        }
     }
 }
