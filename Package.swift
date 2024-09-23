@@ -1,4 +1,5 @@
 // swift-tools-version: 6.0
+import Foundation
 import PackageDescription
 
 let package = Package(
@@ -12,3 +13,11 @@ let package = Package(
         .testTarget(name: "AsyncOperatorsTests", dependencies: ["AsyncOperators"]),
     ]
 )
+
+let isDocCBuild = ProcessInfo.processInfo.environment["DOCC_BUILD"] == "1"
+if isDocCBuild {
+    package.dependencies += [
+        .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.1.0"),
+    ]
+}
+

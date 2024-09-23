@@ -3,7 +3,7 @@ extension Sequence where Element: Sendable {
     /// - Parameters:
     ///   - numberOfConcurrentTasks: A number of concurrent tasks. the given `body` closure run in parallel when the value is 2 or more.
     ///   - priority: A priority of the giving closure.
-    ///   - transform: A similar closure with `forEach`'s one, but it's async.
+    ///   - body: A similar closure with `forEach`'s one, but it's async.
     public func asyncForEach(
         numberOfConcurrentTasks: UInt = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
