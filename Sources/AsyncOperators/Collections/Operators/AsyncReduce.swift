@@ -1,4 +1,5 @@
 extension Sequence where Element: Sendable {
+    /// An async function of `reduce`.
     public func asyncReduce<Result>(
         _ initialResult: Result,
         _ nextPartialResult: (Result, Element) async throws -> Result
@@ -12,6 +13,7 @@ extension Sequence where Element: Sendable {
         return result
     }
 
+    /// An async function of `reduce`.
     public func asyncReduce<Result>(
         into initialResult: Result,
         _ updateAccumulatingResult: (inout Result, Element) async throws -> ()

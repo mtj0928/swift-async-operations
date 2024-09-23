@@ -1,4 +1,12 @@
 extension Sequence where Element: Sendable {
+    /// An async function of `first`.
+    /// - Parameters:
+    ///   - numberOfConcurrentTasks: A number of concurrent tasks. the given `predicate` closure run in parallel when the value is 2 or more.
+    ///   - priority: A priority of the giving closure.
+    ///   - predicate: A similar closure with `first`'s one, but it's async.
+    /// - Returns: A first element which satisfy the given predicate.
+    ///
+    /// > Note: If `numberOfConcurrentTasks` is 2 or more, the predicate closure may run for elements after the first element.
     public func asyncFirst(
         numberOfConcurrentTasks: UInt = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
