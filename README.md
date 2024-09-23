@@ -5,7 +5,7 @@ A library extending the capability of async operations.
 Swift concurrency is powerful language feature, but there are not APIs operating an array for swift concurrency.
 A developer is required to write redundant code.
 ```swift
-var results: [Int] = [] // var is required.
+var results: [Int] = [] // ☹️ var is required.
 for await element in [0, 1, 2, 3, 4] [
     let newElement = try await twice(element)
     result.append(newElement)
@@ -15,6 +15,7 @@ print(results) // [0, 2, 4, 6, 8]
 
 In a case where the loop needs to run concurrently, a developer is required to write more redundant code.
 ```swift
+ // ☹️ Long redundant code
 let array = [0, 1, 2, 3, 4]
 let results = try await withThrowingTaskGroup(of: (Int, Int).self) { group in
     for (index, number) in array.enumerated() {
@@ -26,6 +27,7 @@ let results = try await withThrowingTaskGroup(of: (Int, Int).self) { group in
     for try await (index, result) in group {
         results[index] = result
     }
+    // ☹️ Need to take the order into account.
     return results.sorted(by: { $0.key < $1.key }).map(\.value)
 }
 print(results) // [0, 2, 4, 6, 8]
@@ -60,7 +62,7 @@ This library provides async operations like `asyncForEach` and `asyncMap`.
 ```swift
 try await [1, 2, 3].asyncForEach { number in
     print("Start: \(number)")
-    try await doSomething(number) // 😁 async function is available here.
+    try await doSomething(number)
     print("End: \(number)")
 }
 ```
