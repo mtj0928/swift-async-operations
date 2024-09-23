@@ -69,6 +69,10 @@ public struct ThrowingOrderedTaskGroup<ChildTaskResult: Sendable, Failure: Error
             throw error.rawError
         }
     }
+
+    public func cancelAll() {
+        internalGroup.cancelAll()
+    }
 }
 
 extension ThrowingOrderedTaskGroup: AsyncSequence, AsyncIteratorProtocol where Failure: Error {

@@ -55,6 +55,10 @@ public struct OrderedTaskGroup<ChildTaskResult: Sendable> {
     public mutating func waitForAll() async {
         await internalGroup.waitForAll()
     }
+
+    public func cancelAll() {
+        internalGroup.cancelAll()
+    }
 }
 
 extension OrderedTaskGroup: AsyncSequence, AsyncIteratorProtocol {
