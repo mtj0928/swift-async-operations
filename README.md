@@ -2,8 +2,8 @@
 A library extending the capability of async operations.
 
 ## Motivation
-Swift concurrency is poweful language feature, but threre are not APIs operating an array for swift concurrency.
-A devloper is required to write redundant code.
+Swift concurrency is powerful language feature, but there are not APIs operating an array for swift concurrency.
+A developer is required to write redundant code.
 ```swift
 var results: [Int] = [] // var is required.
 for await element in [0, 1, 2, 3, 4] [
@@ -32,15 +32,15 @@ print(results) // [0, 2, 4, 6, 8]
 ```
 
 ## Solution
-This library provides async functions as exnteiosns of `Sequence` like `asyncMap`.
+This library provides async functions as extensions of `Sequence` like `asyncMap`.
 ```swift
 let converted = try await [0, 1, 2, 3, 4].asyncMap { number in
     try await twice(number)
 }
 print(converted) // [0, 2, 4, 6, 8]
 ```
-The closure run sequentailly as a default behavior.
-By specifying a max number of tasks, the closure can also run concurrently.
+The closure runs sequentially by default.
+And by specifying a max number of tasks, the closure can also run concurrently.
 
 ```swift
 let converted = try await [0, 1, 2, 3, 4].asyncMap(numberOfConcurrentTasks: 8) { number in
@@ -65,7 +65,7 @@ try await [1, 2, 3].asyncForEach { number in
 }
 ```
 
-The closure runs sequential as a default behavior.
+The closure runs sequential by default.
 
 ```
 Start: 1
