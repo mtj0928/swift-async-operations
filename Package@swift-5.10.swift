@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 5.10
 import Foundation
 import PackageDescription
 
@@ -10,7 +10,10 @@ let package = Package(
     ],
     targets: [
         .target(name: "AsyncOperations"),
-        .testTarget(name: "AsyncOperationsTests", dependencies: ["AsyncOperations"]),
+        .testTarget(
+            name: "AsyncOperationsTests",
+            dependencies: ["AsyncOperations"]
+        ),
     ]
 )
 

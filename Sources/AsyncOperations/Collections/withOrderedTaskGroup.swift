@@ -1,3 +1,4 @@
+#if swift(>=6.0)
 /// A wrapper function of `withTaskGroup`.
 ///
 /// The main difference with `withTaskGroup` is that the group's next function returns the results in the order the tasks were added.
@@ -29,6 +30,18 @@ public func withOrderedTaskGroup<ChildTaskResult: Sendable, GroupResult>(
         return await body(&orderedTaskGroup)
     }
 }
+#else
+public func withOrderedTaskGroup<ChildTaskResult: Sendable, GroupResult>(
+    of childTaskResultType: ChildTaskResult.Type,
+    returning returnType: GroupResult.Type = GroupResult.self,
+    body: (inout OrderedTaskGroup<ChildTaskResult>) async -> GroupResult
+) async -> GroupResult {
+    await withTaskGroup(of: (Index, ChildTaskResult).self, returning: returnType) { group in
+        var orderedTaskGroup = OrderedTaskGroup<ChildTaskResult>(group)
+        return await body(&orderedTaskGroup)
+    }
+}
+#endif
 
 public struct OrderedTaskGroup<ChildTaskResult: Sendable> {
     private var internalGroup: TaskGroup<(Index, ChildTaskResult)>
@@ -40,6 +53,7 @@ public struct OrderedTaskGroup<ChildTaskResult: Sendable> {
         self.internalGroup = internalGroup
     }
 
+#if swift(>=6.0)
     public mutating func addTask(
         priority: TaskPriority? = nil,
         operation: sending @escaping @isolated(any) () async -> ChildTaskResult
@@ -51,6 +65,19 @@ public struct OrderedTaskGroup<ChildTaskResult: Sendable> {
         }
         addedTaskIndex = addedTaskIndex.next()
     }
+#else
+    public mutating func addTask(
+        priority: TaskPriority? = nil,
+        operation: @escaping @Sendable () async -> ChildTaskResult
+    ) {
+        let currentIndex = addedTaskIndex
+        internalGroup.addTask(priority: priority) {
+            let result = await operation()
+            return (currentIndex, result)
+        }
+        addedTaskIndex = addedTaskIndex.next()
+    }
+#endif
 
     public mutating func waitForAll() async {
         await internalGroup.waitForAll()

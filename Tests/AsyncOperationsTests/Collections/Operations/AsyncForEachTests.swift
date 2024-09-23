@@ -1,13 +1,15 @@
 import AsyncOperations
-import Testing
+import XCTest
 
-@MainActor func asyncForEach() async throws {
-    var results: [Int] = []
-    await [0, 1, 2, 3, 4].asyncForEach { @MainActor number in
-        await Task.yield()
-        results.append(number)
+final class AsyncForEachTests: XCTestCase {
+    @MainActor 
+    func testAsyncForEach() async throws {
+        var results: [Int] = []
+        await [0, 1, 2, 3, 4].asyncForEach { @MainActor number in
+            await Task.yield()
+            results.append(number)
+        }
+        XCTAssertEqual(results.count, 5)
+        XCTAssertEqual(Set(results), [0, 1, 2, 3, 4])
     }
-    print(results)
-    #expect(results.count == 5)
-    #expect(Set(results) == [0, 1, 2, 3, 4])
 }

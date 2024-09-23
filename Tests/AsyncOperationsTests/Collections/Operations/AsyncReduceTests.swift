@@ -1,20 +1,21 @@
 import AsyncOperations
-import Testing
+import XCTest
 
-@Test("asyncReduce")
-func asyncReduceTests() async throws {
-    let results = await [1, 2, 3, 4, 5].asyncReduce(0) { result, element in
-        await Task.yield()
-        return result + element
+final class AsyncReduceTests: XCTestCase {
+    func asyncReduce() async throws {
+        let results = await [1, 2, 3, 4, 5].asyncReduce(0) { result, element in
+            await Task.yield()
+            return result + element
+        }
+        XCTAssertEqual(results, 15)
     }
-    #expect(results == 15)
-}
 
-@Test("asyncReduce + into")
-func asyncReduceIntoTests() async throws {
-    let results = await [1, 2, 3, 4, 5].asyncReduce(into: 0) { result, element in
-        await Task.yield()
-        result += element
+
+    func testAsyncReduceInto() async throws {
+        let results = await [1, 2, 3, 4, 5].asyncReduce(into: 0) { result, element in
+            await Task.yield()
+            result += element
+        }
+        XCTAssertEqual(results, 15)
     }
-    #expect(results == 15)
 }
