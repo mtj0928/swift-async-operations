@@ -149,7 +149,7 @@ print(results) // ☹️ [0, 4, 2, 6, 10, 8]
 
 However, ordered `for await` is required in some of situations like converting an array to a new array.
 
-[withOrderedTaskGroup](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncreduce(into:_:)) and [withThrowingOrderedTaskGroup](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/withthrowingorderedtaskgroup(of:returning:isolation:body:)) satisfy such requirements.
+[withOrderedTaskGroup](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/withorderedtaskgroup(of:returning:isolation:body:)) and [withThrowingOrderedTaskGroup](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/withthrowingorderedtaskgroup(of:returning:isolation:body:)) satisfy such requirements.
 ```swift
 let results = await withOrderedTaskGroup(of: Int.self) { group in
     (0..<5).forEach { number in
