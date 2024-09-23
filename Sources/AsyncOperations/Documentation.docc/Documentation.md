@@ -1,9 +1,9 @@
-# ``AsyncOperators``
+# ``AsyncOperations``
 
 Adds the capability of async operations.
 
 ## Overview
-`AsyncOperators` provides asynchronous operations for generic higher-order functions like `map` and `filter`.
+`AsyncOperations` provides asynchronous operations for generic higher-order functions like `map` and `filter`.
 
 This library provides two features.
 

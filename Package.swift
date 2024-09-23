@@ -3,14 +3,14 @@ import Foundation
 import PackageDescription
 
 let package = Package(
-    name: "swift-async-operators",
+    name: "swift-async-operations",
     platforms: [.macOS(.v13), .iOS(.v16), .watchOS(.v9), .macCatalyst(.v16), .tvOS(.v16), .visionOS(.v1)],
     products: [
-        .library(name: "AsyncOperators", targets: ["AsyncOperators"]),
+        .library(name: "AsyncOperations", targets: ["AsyncOperations"]),
     ],
     targets: [
-        .target(name: "AsyncOperators"),
-        .testTarget(name: "AsyncOperatorsTests", dependencies: ["AsyncOperators"]),
+        .target(name: "AsyncOperations"),
+        .testTarget(name: "AsyncOperationsTests", dependencies: ["AsyncOperations"]),
     ]
 )
 

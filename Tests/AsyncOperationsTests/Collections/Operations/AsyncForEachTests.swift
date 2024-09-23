@@ -1,4 +1,4 @@
-import AsyncOperators
+import AsyncOperations
 import Testing
 
 @MainActor func asyncForEach() async throws {

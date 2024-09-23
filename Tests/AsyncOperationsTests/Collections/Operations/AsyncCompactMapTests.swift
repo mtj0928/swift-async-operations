@@ -1,4 +1,4 @@
-import AsyncOperators
+import AsyncOperations
 import Testing
 
 @Test("asyncCompactMap + multiple tasks")

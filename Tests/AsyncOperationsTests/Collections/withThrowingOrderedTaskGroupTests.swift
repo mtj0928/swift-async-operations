@@ -1,5 +1,5 @@
 import Testing
-import AsyncOperators
+import AsyncOperations
 
 @Test("withThrowingOrderedTaskGroup")
 func testWithThrowingOrderedTaskGroup() async throws {
