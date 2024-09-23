@@ -1,7 +1,7 @@
 import AsyncOperators
 import Testing
 
-@Test("AsyncFilter")
+@Test("asyncFilter")
 func asyncFilter() async throws {
     let filteredNumbers = await [0, 1, 2, 3, 4].asyncFilter { number in
         await Task.yield()
