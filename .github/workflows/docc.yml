@@ -25,7 +25,7 @@ jobs:
         with:
           path: docs
   DeployDocC:
-    needs: DocC
+    needs: BuildDocC
     permissions:
       pages: write
       id-token: write
