@@ -1,4 +1,4 @@
-#if swift(>=6.0)
+#if compiler(>=6.0)
 /// A wrapper function of `withTaskGroup`.
 ///
 /// The main difference with `withTaskGroup` is that the group's next function returns the results in the order the tasks were added.
@@ -53,7 +53,7 @@ public struct OrderedTaskGroup<ChildTaskResult: Sendable> {
         self.internalGroup = internalGroup
     }
 
-#if swift(>=6.0)
+#if compiler(>=6.0)
     public mutating func addTask(
         priority: TaskPriority? = nil,
         operation: sending @escaping @isolated(any) () async -> ChildTaskResult
