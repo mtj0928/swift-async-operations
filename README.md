@@ -6,7 +6,7 @@ Swift concurrency is powerful language feature, but there are not APIs operating
 A developer is required to write redundant code.
 ```swift
 var results: [Int] = [] // ☹️ var is required.
-for await element in [0, 1, 2, 3, 4] [
+for await element in [0, 1, 2, 3, 4] {
     let newElement = try await twice(element)
     result.append(newElement)
 }
