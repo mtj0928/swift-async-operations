@@ -5,7 +5,9 @@ on:
       - main
 jobs:
   BuildDocC:
-    runs-on: macos-latest
+    runs-on: macos-15
+    env:
+      DEVELOPER_DIR: "/Applications/Xcode_16.2.app/Contents/Developer"
     steps:
       - uses: SwiftyLab/setup-swift@latest
         with:
@@ -21,7 +23,7 @@ jobs:
           --hosting-base-path swift-async-operations
         env:
           DOCC_BUILD: 1
-      - uses: actions/upload-pages-artifact@v2
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: docs
   DeployDocC:
