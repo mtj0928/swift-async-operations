@@ -1,5 +1,13 @@
 # swift-async-operations
-A library extending the capability of async operations.
+
+<p align="center">
+    <img width="280" alt="logo" src="https://github.com/user-attachments/assets/1d38d8cb-cfb7-4666-90cd-4f461a803b48">
+</p>
+<p align="center">
+    <strong>swift-async-operations</strong><br>
+    A library extending the capability of async operations.
+</p>
+
 
 ## Motivation
 Swift concurrency is powerful language feature, but there are not APIs operating an array for swift concurrency.
