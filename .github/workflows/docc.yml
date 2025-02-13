@@ -39,4 +39,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: docs
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
