@@ -24,6 +24,7 @@ jobs:
         env:
           DOCC_BUILD: 1
       - uses: actions/upload-pages-artifact@v3
+        id: docs
         with:
           path: docs
   DeployDocC:
@@ -37,5 +38,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
-        id: deployment
+        id: docs
         uses: actions/deploy-pages@v2
