@@ -2,7 +2,7 @@ import AsyncOperations
 import XCTest
 
 
-final class AsyncCompactMapTests: XCTestCase {
+final class SequenceAsyncCompactMapTests: XCTestCase {
     func testAsyncCompactMapMultipleTasks() async throws {
         let results = await [0, 1, 2, 3, 4].asyncCompactMap { number in
             await Task.yield()

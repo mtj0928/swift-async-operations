@@ -1,7 +1,7 @@
 import AsyncOperations
 import XCTest
 
-final class AsyncFlatMapTeats: XCTestCase {
+final class SequenceAsyncFlatMapTeats: XCTestCase {
     func testAsyncFlatMap() async throws {
         let results = await [0, 1, 2, 3, 4].asyncFlatMap { number in
             await Task.yield()

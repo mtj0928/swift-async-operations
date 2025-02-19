@@ -2,7 +2,7 @@ import AsyncOperations
 import Foundation
 import XCTest
 
-final class AsyncMapTests: XCTestCase {
+final class SequenceAsyncMapTests: XCTestCase {
     func testAsyncMapMultipleTasks() async throws {
         let startTime = Date()
         let results = try await [0, 1, 2, 3, 4].asyncMap(numberOfConcurrentTasks: 8) { number in

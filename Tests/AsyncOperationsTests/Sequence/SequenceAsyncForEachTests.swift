@@ -1,7 +1,7 @@
 import AsyncOperations
 import XCTest
 
-final class AsyncForEachTests: XCTestCase {
+final class SequenceAsyncForEachTests: XCTestCase {
     @MainActor 
     func testAsyncForEach() async throws {
         var results: [Int] = []
