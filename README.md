@@ -126,15 +126,18 @@ End: 2
 [2, 4, 6]
 ```
 This library provides
-- [asyncForEach](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncallsatisfy(numberofconcurrenttasks:priority:_:))
-- [asyncMap](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncmap(numberofconcurrenttasks:priority:_:))
-- [asyncFlatMap](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncflatmap(numberofconcurrenttasks:priority:_:))
-- [asyncCompactMap](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asynccompactmap(numberofconcurrenttasks:priority:_:))
-- [asyncFilter](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncfilter(numberofconcurrenttasks:priority:_:))
-- [asyncFirst](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncfirst(numberofconcurrenttasks:priority:where:))
-- [asyncAllSatisfy](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncallsatisfy(numberofconcurrenttasks:priority:_:))
-- [asyncContains](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asynccontains(numberofconcurrenttasks:priority:where:))
-- [asyncReduce](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncreduce(into:_:))
+- Sequence
+    - [asyncForEach](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncforeach(numberofconcurrenttasks:priority:_:))
+    - [asyncMap](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncmap(numberofconcurrenttasks:priority:_:))
+    - [asyncFlatMap](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncflatmap(numberofconcurrenttasks:priority:_:))
+    - [asyncCompactMap](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asynccompactmap(numberofconcurrenttasks:priority:_:))
+    - [asyncFilter](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncfilter(numberofconcurrenttasks:priority:_:))
+    - [asyncFirst](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncfirst(numberofconcurrenttasks:priority:where:))
+    - [asyncAllSatisfy](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncallsatisfy(numberofconcurrenttasks:priority:_:))
+    - [asyncContains](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asynccontains(numberofconcurrenttasks:priority:where:))
+    - [asyncReduce](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncreduce(into:_:))e
+- AsyncSequence
+    - [asyncForEach](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/_concurrency/asyncsequence/asyncforeach(numberofconcurrenttasks:priority:_:))
 
 ### Ordered Task Group
 The original utility function `withTaskGroup` and `withThrowingTaskGroup` don't ensure the order of `for await`.

@@ -7,7 +7,7 @@ extension AsyncSequence where Element: Sendable {
     ///     (0..<5).forEach { c.yield($0) }
     ///     c.finish()
     /// }
-    /// await asyncSequence.asyncForEach(numberOfConcurrentTasks: 3) { @MainActor number in
+    /// await asyncSequence.asyncForEach(numberOfConcurrentTasks: 3) { number in
     ///     print("Start: \(number)")
     ///     await Task.yield()
     ///     print("end: \(number)")

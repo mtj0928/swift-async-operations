@@ -21,6 +21,8 @@ jobs:
           --output-path ./docs \
           --transform-for-static-hosting \
           --hosting-base-path swift-async-operations
+          --source-service github \
+          --source-service-base-url https://github.com/mtj0928/swift-async-operations/blob/main
         env:
           DOCC_BUILD: 1
       - uses: actions/upload-pages-artifact@v3
