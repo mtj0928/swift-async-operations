@@ -23,7 +23,7 @@ jobs:
           --hosting-base-path swift-async-operations \
           --source-service github \
           --source-service-base-url https://github.com/mtj0928/swift-async-operations/blob/main \
-          --checkout-path . 
+          --checkout-path $GITHUB_WORKSPACE
         env:
           DOCC_BUILD: 1
       - uses: actions/upload-pages-artifact@v3
