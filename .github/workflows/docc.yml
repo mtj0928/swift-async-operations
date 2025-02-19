@@ -20,9 +20,10 @@ jobs:
           --disable-indexing \
           --output-path ./docs \
           --transform-for-static-hosting \
-          --hosting-base-path swift-async-operations
+          --hosting-base-path swift-async-operations \
           --source-service github \
-          --source-service-base-url https://github.com/mtj0928/swift-async-operations/blob/main
+          --source-service-base-url https://github.com/mtj0928/swift-async-operations/blob/main \
+          --checkout-path . 
         env:
           DOCC_BUILD: 1
       - uses: actions/upload-pages-artifact@v3
