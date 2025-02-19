@@ -135,7 +135,7 @@ This library provides
     - [asyncFirst](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncfirst(numberofconcurrenttasks:priority:where:))
     - [asyncAllSatisfy](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncallsatisfy(numberofconcurrenttasks:priority:_:))
     - [asyncContains](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asynccontains(numberofconcurrenttasks:priority:where:))
-    - [asyncReduce](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncreduce(into:_:))e
+    - [asyncReduce](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncreduce(into:_:))
 - AsyncSequence
     - [asyncForEach](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/_concurrency/asyncsequence/asyncforeach(numberofconcurrenttasks:priority:_:))
 
