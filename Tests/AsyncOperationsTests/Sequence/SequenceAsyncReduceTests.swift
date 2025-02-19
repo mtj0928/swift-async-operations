@@ -1,7 +1,7 @@
 import AsyncOperations
 import XCTest
 
-final class AsyncReduceTests: XCTestCase {
+final class SequenceAsyncReduceTests: XCTestCase {
     func asyncReduce() async throws {
         let results = await [1, 2, 3, 4, 5].asyncReduce(0) { result, element in
             await Task.yield()

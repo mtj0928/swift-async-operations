@@ -1,7 +1,7 @@
 import AsyncOperations
 import XCTest
 
-final class AsyncFilterTests: XCTestCase {
+final class SequenceAsyncFilterTests: XCTestCase {
     func testAsyncFilter() async throws {
         let filteredNumbers = await [0, 1, 2, 3, 4].asyncFilter { number in
             await Task.yield()

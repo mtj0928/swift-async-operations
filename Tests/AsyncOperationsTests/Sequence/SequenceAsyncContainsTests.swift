@@ -1,7 +1,7 @@
 import AsyncOperations
 import XCTest
 
-final class AsyncContainsTests: XCTestCase {
+final class SequenceAsyncContainsTests: XCTestCase {
     func testAsyncContains() async throws {
         let containsResult = await [1, 2, 3].asyncContains { number in
             XCTAssertNotEqual(number, 3)

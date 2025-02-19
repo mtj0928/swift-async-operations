@@ -1,7 +1,7 @@
 import AsyncOperations
 import XCTest
 
-final class AsyncFirstTests: XCTestCase {
+final class SequenceAsyncFirstTests: XCTestCase {
     func testAsyncFirst() async throws {
         let containResult = await [0, 1, 2, 3, 4].asyncFirst(numberOfConcurrentTasks: 8) { number in
             await Task.yield()
