@@ -1,5 +1,3 @@
-import Foundation
-
 extension Sequence where Element: Sendable {
     /// An async function of `reduce` with chunk size.
     public func asyncReduce<Result: Sendable>(

@@ -1,8 +1,3 @@
-//
-//  Copyright © 2025 Taichone. All rights reserved.
-//
-     
-
 extension Sequence where Element: Sendable {
     public func internalForEach<T: Sendable>(
         group: inout ThrowingOrderedTaskGroup<[T], any Error>,
