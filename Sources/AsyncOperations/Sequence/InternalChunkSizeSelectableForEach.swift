@@ -4,13 +4,12 @@
      
 
 extension Sequence where Element: Sendable {
-    public func internalForEach<T: Sendable, U: Sendable>(
+    public func internalForEach<T: Sendable>(
         group: inout ThrowingOrderedTaskGroup<[T], any Error>,
         numberOfConcurrentTasks: UInt,
         priority: TaskPriority?,
         chunkSize: UInt,
         taskOperation: @escaping @Sendable (Element) async throws -> T,
-        chunkOperation: @escaping @Sendable ([T]) async throws -> U,
         nextOperation: (T) -> ()
     ) async throws {
         // チャンクに分割して処理
@@ -30,26 +29,24 @@ extension Sequence where Element: Sendable {
                     }
                 }
                 
-                // チャンク全体を1つのタスクとして追加
-                let chunkToProcess = currentChunk
+                let chunkToProcess = currentChunk // Sendable
                 group.addTask(priority: priority) {
-                    // チャンク内の各要素を処理し、結果を配列として返す
+                    // chunk 内を同期処理
                     var results: [T] = []
                     for element in chunkToProcess {
                         let result = try await taskOperation(element)
                         results.append(result)
                     }
-
-                    // ここに、 ([T]) -> U を入れる
                     return results
                 }
                 
-                currentChunk = []  // チャンクをリセット
+                currentChunk = []
             }
         }
         
         // 残りの結果を処理
         for try await values: [T] in group {
+            // TODO: 将来的には配列のまま接続するオプションも検討
             for value in values {
                 nextOperation(value)
             }
