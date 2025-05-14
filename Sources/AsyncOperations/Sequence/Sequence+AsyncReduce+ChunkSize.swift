@@ -13,11 +13,10 @@ extension Sequence where Element: Sendable {
             Array(array[$0..<Swift.min($0 + chunkSize, array.count)])
         }
         
-        return try await withThrowingTaskGroup(of: Result.self) { group in
-            var result = initialResult
-            
-            for chunk in chunks {
-                let currentResult = result
+        var result = initialResult
+        for chunk in chunks {
+            let currentResult = result
+            result = try await withThrowingTaskGroup(of: Result.self) { group in
                 group.addTask(priority: priority) { @Sendable in
                     var chunkResult = currentResult
                     for element in chunk {
@@ -25,14 +24,12 @@ extension Sequence where Element: Sendable {
                     }
                     return chunkResult
                 }
+                
+                return try await group.next() ?? currentResult
             }
-            
-            while let chunkResult = try await group.next() {
-                result = chunkResult
-            }
-            
-            return result
         }
+        
+        return result
     }
     
     /// An async function of `reduce` with chunk size.
@@ -47,11 +44,10 @@ extension Sequence where Element: Sendable {
             Array(array[$0..<Swift.min($0 + chunkSize, array.count)])
         }
         
-        return try await withThrowingTaskGroup(of: Result.self) { group in
-            var result = initialResult
-            
-            for chunk in chunks {
-                let currentResult = result
+        var result = initialResult
+        for chunk in chunks {
+            let currentResult = result
+            result = try await withThrowingTaskGroup(of: Result.self) { group in
                 group.addTask(priority: priority) { @Sendable in
                     var chunkResult = currentResult
                     for element in chunk {
@@ -59,13 +55,11 @@ extension Sequence where Element: Sendable {
                     }
                     return chunkResult
                 }
+                
+                return try await group.next() ?? currentResult
             }
-            
-            while let chunkResult = try await group.next() {
-                result = chunkResult
-            }
-            
-            return result
         }
+        
+        return result
     }
 } 
