@@ -2,7 +2,7 @@ import AsyncOperations
 import XCTest
 
 
-final class SequenceAsyncCompactMapWithChunkSizeTests: XCTestCase {
+final class SequenceAsyncCompactMapChunkSizeTests: XCTestCase {
     func testAsyncCompactMapWithChunkSize() async throws {
         let results = await [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].asyncCompactMap(
             numberOfConcurrentTasks: 2,
