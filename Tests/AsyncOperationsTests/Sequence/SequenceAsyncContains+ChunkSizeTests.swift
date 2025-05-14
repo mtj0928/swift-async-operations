@@ -69,11 +69,11 @@ final class SequenceAsyncContainsChunkSizeTests: XCTestCase {
     func testAsyncContainsWithPriority() async throws {
         let array = Array(1...100)
         
-        let result = try await array.asyncContains(
+        let result = await array.asyncContains(
             chunkSize: 10,
             priority: .high
         ) { element in
-            try await Task.sleep(nanoseconds: 1_000_000) // 1ms
+            await Task.yield()
             return element == 50
         }
         XCTAssertTrue(result)
