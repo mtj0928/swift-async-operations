@@ -12,15 +12,14 @@ extension Sequence where Element: Sendable {
         taskOperation: @escaping @Sendable (Element) async throws -> T,
         nextOperation: (T) -> ()
     ) async throws {
-        // チャンクに分割して処理
         var currentChunk: [Element] = []
         
         for (index, element) in self.enumerated() {
             currentChunk.append(element)
             
-            // チャンクサイズに達したか、最後の要素の場合
+            // チャンクサイズに達した or 最後の要素: addTask
             if currentChunk.count == chunkSize || index == Array(self).count - 1 {
-                // タスク数が上限を超えているなら、結果を処理
+                // タスク数が上限を超えている: 結果を処理
                 if index >= numberOfConcurrentTasks {
                     if let values = try await group.next() {
                         for value in values {
@@ -31,7 +30,7 @@ extension Sequence where Element: Sendable {
                 
                 let chunkToProcess = currentChunk // Sendable
                 group.addTask(priority: priority) {
-                    // chunk 内を同期処理
+                    // chunk 内は同期処理
                     var results: [T] = []
                     for element in chunkToProcess {
                         let result = try await taskOperation(element)
