@@ -31,4 +31,4 @@ final class SequenceAsyncFilterChunkSizeTests: XCTestCase {
         }
         XCTAssertEqual(result2, [0, 2])
     }
-} 
+}
