@@ -53,4 +53,4 @@ final class SequenceAsyncForEachChunkSizeTests: XCTestCase {
         let result2 = await processedNumbers.getNumbers()
         XCTAssertEqual(result2, [1, 2, 3])
     }
-} 
+}

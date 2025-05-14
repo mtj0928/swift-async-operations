@@ -22,4 +22,4 @@ extension Sequence where Element: Sendable {
             )
         }
     }
-} 
+}

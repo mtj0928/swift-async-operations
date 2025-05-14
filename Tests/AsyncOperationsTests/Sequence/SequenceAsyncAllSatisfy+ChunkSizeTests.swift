@@ -8,7 +8,7 @@ final class SequenceAsyncAllSatisfyChunkSizeTests: XCTestCase {
             return number < 5
         }
         XCTAssertTrue(satisfiedResult)
-
+        
         let unsatisfiedResult = await [0, 1, 2, 3, 4].asyncAllSatisfy(chunkSize: 2) { number in
             await Task.yield()
             return number < 4

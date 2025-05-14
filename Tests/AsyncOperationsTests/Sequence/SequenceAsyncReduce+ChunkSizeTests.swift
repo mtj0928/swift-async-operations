@@ -93,4 +93,4 @@ final class SequenceAsyncReduceChunkSizeTests: XCTestCase {
         }
         XCTAssertEqual(sum, 55)
     }
-} 
+}

@@ -28,4 +28,4 @@ final class SequenceAsyncMapChunkSizeTests: XCTestCase {
         }
         XCTAssertEqual(result2, [2, 4, 6])
     }
-} 
+}

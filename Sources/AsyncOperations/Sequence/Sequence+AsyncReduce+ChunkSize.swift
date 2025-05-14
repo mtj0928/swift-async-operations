@@ -60,4 +60,4 @@ extension Sequence where Element: Sendable {
         
         return result
     }
-} 
+}
