@@ -8,19 +8,23 @@ extension Sequence where Element: Sendable {
         nextOperation: (T) -> ()
     ) async throws {
         var currentChunk: [Element] = []
+        let elementsCount = Array(self).count
+        var availableConcurrentTasks = numberOfConcurrentTasks
         
         for (index, element) in self.enumerated() {
             currentChunk.append(element)
             
             // チャンクサイズに達した or 最後の要素: addTask
-            if currentChunk.count == chunkSize || index == Array(self).count - 1 {
-                // タスク数が上限を超えている: 結果を処理
-                if index >= numberOfConcurrentTasks {
+            if currentChunk.count == chunkSize || index == elementsCount - 1 {
+                // タスク数が上限に達している場合は、1つの結果が出るのを待ってから
+                if availableConcurrentTasks == 0 {
                     if let values = try await group.next() {
                         for value in values {
                             nextOperation(value)
                         }
                     }
+                } else {
+                    availableConcurrentTasks -= 1
                 }
                 
                 let chunkToProcess = currentChunk // Sendable
@@ -33,7 +37,7 @@ extension Sequence where Element: Sendable {
                     }
                     return results
                 }
-                
+
                 currentChunk = []
             }
         }
