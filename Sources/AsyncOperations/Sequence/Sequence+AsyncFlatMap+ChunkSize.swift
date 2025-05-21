@@ -2,7 +2,9 @@ extension Sequence where Element: Sendable {
     /// An async function of `flatMap` with chunk size control.
     /// - Parameters:
     ///   - numberOfConcurrentTasks: A number of concurrent tasks. the given `transform` closure run in parallel when the value is 2 or more.
-    ///   - priority: A priority of the giving closure.
+    ///   - priority: The priority of the operation task.
+    ///     Omit this parameter or pass `.unspecified`
+    ///     to set the child task's priority to the priority of the group.
     ///   - chunkSize: A size of chunk for processing elements.
     ///   - transform: A similar closure with `flatMap`'s one, but it's async.
     /// - Returns: A transformed array.

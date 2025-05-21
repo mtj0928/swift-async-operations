@@ -3,7 +3,9 @@ extension Sequence where Element: Sendable {
     /// - Parameters:
     ///   - group: A throwing ordered task group to add tasks to.
     ///   - numberOfConcurrentTasks: A number of concurrent tasks. The operation is limited to this number of parallel executions.
-    ///   - priority: A priority of the task.
+    ///   - priority: The priority of the operation task.
+    ///     Omit this parameter or pass `.unspecified`
+    ///     to set the child task's priority to the priority of the group.
     ///   - chunkSize: A size of chunk for processing elements.
     ///   - taskOperation: An operation to perform on each element.
     ///   - nextOperation: A closure to execute with the result of each operation.

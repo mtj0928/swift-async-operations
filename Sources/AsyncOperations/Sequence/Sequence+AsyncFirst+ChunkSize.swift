@@ -2,7 +2,9 @@ extension Sequence where Element: Sendable {
     /// チャンクサイズ指定可能な asyncFirst。
     /// - Parameters:
     ///   - chunkSize: 各チャンクで並列に処理する要素数。
-    ///   - priority: タスクの優先度。
+    ///   - priority: The priority of the operation task.
+    ///     Omit this parameter or pass `.unspecified`
+    ///     to set the child task's priority to the priority of the group.
     ///   - predicate: async で判定する述語クロージャ。
     /// - Returns: 条件を満たす最初の要素。なければ nil。
     public func asyncFirst(

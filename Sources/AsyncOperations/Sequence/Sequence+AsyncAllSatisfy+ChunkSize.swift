@@ -2,7 +2,9 @@ extension Sequence where Element: Sendable {
     /// An async function of `allSatisfy` that processes elements in chunks.
     /// - Parameters:
     ///   - chunkSize: The number of elements to process in each chunk.
-    ///   - priority: A priority of the giving closure.
+    ///   - priority: The priority of the operation task.
+    ///     Omit this parameter or pass `.unspecified`
+    ///     to set the child task's priority to the priority of the group.
     ///   - predicate: A similar closure with `allSatisfy`'s one, but it's async.
     /// - Returns: `true` if all elements satisfy the `predicate`. `false` if not.
     public func asyncAllSatisfy(

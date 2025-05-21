@@ -21,6 +21,20 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5265A5232DD33BF200F8AECA"
+               BuildableName = "TriggerBox.app"
+               BlueprintName = "TriggerBox"
+               ReferencedContainer = "container:../pdsl-xcworkspace/iOSSample/TriggerBox.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -62,10 +76,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AsyncOperations"
-            BuildableName = "AsyncOperations"
-            BlueprintName = "AsyncOperations"
-            ReferencedContainer = "container:">
+            BlueprintIdentifier = "5265A5232DD33BF200F8AECA"
+            BuildableName = "TriggerBox.app"
+            BlueprintName = "TriggerBox"
+            ReferencedContainer = "container:../pdsl-xcworkspace/iOSSample/TriggerBox.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
