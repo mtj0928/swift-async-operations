@@ -1,10 +1,10 @@
-import AsyncOperations
 import XCTest
+@testable import PDSL
 
 
 final class SequenceAsyncCompactMapChunkSizeTests: XCTestCase {
     func testAsyncCompactMapWithChunkSize() async throws {
-        let results = await [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].asyncCompactMap(
+        let results = await [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].pdslCompactMap(
             numberOfConcurrentTasks: 2,
             priority: nil,
             chunkSize: 3
@@ -17,7 +17,7 @@ final class SequenceAsyncCompactMapChunkSizeTests: XCTestCase {
     }
 
     func testAsyncCompactMapWithChunkSizeAndSingleTask() async throws {
-        let results = await [0, 1, 2, 3, 4].asyncCompactMap(
+        let results = await [0, 1, 2, 3, 4].pdslCompactMap(
             numberOfConcurrentTasks: 1,
             priority: nil,
             chunkSize: 2

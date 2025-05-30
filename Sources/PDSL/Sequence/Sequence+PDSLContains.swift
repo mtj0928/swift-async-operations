@@ -7,7 +7,7 @@ extension Sequence where Element: Sendable {
     ///     to set the child task's priority to the priority of the group.
     ///   - predicate: A similar closure with `contains`'s one, but it's async.
     /// - Returns: `true` if this array contains an element satisfies the given predicate. `false` if not.
-    public func asyncContains(
+    public func pdslContains(
         chunkSize: Int,
         priority: TaskPriority? = nil,
         where predicate: @escaping @Sendable (Element) async throws -> Bool

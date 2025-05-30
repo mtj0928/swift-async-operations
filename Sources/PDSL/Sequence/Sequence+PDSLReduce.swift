@@ -1,6 +1,6 @@
 extension Sequence where Element: Sendable {
     /// An async function of `reduce` with chunk size.
-    public func asyncReduce<Result: Sendable>(
+    public func pdslReduce<Result: Sendable>(
         _ initialResult: Result,
         chunkSize: Int,
         priority: TaskPriority? = nil,
@@ -31,7 +31,7 @@ extension Sequence where Element: Sendable {
     }
     
     /// An async function of `reduce` with chunk size.
-    public func asyncReduce<Result: Sendable>(
+    public func pdslReduce<Result: Sendable>(
         into initialResult: Result,
         chunkSize: Int,
         priority: TaskPriority? = nil,

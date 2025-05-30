@@ -1,3 +1,5 @@
+import AsyncOperations
+
 extension Sequence where Element: Sendable {
     /// An async function of `map` with chunk size control.
     /// - Parameters:
@@ -8,7 +10,7 @@ extension Sequence where Element: Sendable {
     ///   - chunkSize: A size of chunk for processing elements.
     ///   - transform: A similar closure with `map`'s one, but it's async.
     /// - Returns: A transformed array.
-    public func asyncMap<T: Sendable>(
+    public func pdslMap<T: Sendable>(
         numberOfConcurrentTasks: UInt = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
         chunkSize: UInt,
@@ -17,7 +19,7 @@ extension Sequence where Element: Sendable {
         try await withThrowingOrderedTaskGroup(of: [T].self) { group in
             var values: [T] = []
 
-            try await internalForEach(
+            try await pdslInternalForEach(
                 group: &group,
                 numberOfConcurrentTasks: numberOfConcurrentTasks,
                 priority: priority,

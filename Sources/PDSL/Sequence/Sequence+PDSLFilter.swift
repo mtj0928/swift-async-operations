@@ -1,3 +1,5 @@
+import AsyncOperations
+
 extension Sequence where Element: Sendable {
     /// An async function of `filter`.
     /// - Parameters:
@@ -8,7 +10,7 @@ extension Sequence where Element: Sendable {
     ///   - chunkSize: A size of chunk for processing elements.
     ///   - isIncluded: A similar closure with `filter`'s one, but it's async.
     /// - Returns: A filtered array which has only elements which satisfy the `isIncluded`.
-    public func asyncFilter(
+    public func pdslFilter(
         numberOfConcurrentTasks: UInt = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
         chunkSize: UInt,
@@ -17,7 +19,7 @@ extension Sequence where Element: Sendable {
         try await withThrowingOrderedTaskGroup(of: [Element?].self) { group in
             var values: [Element] = []
 
-            try await internalForEach(
+            try await pdslInternalForEach(
                 group: &group,
                 numberOfConcurrentTasks: numberOfConcurrentTasks,
                 priority: priority,

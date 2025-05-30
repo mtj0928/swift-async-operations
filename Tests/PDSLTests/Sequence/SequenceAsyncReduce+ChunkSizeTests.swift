@@ -1,19 +1,19 @@
 import XCTest
-@testable import AsyncOperations
+@testable import PDSL
 
 final class SequenceAsyncReduceChunkSizeTests: XCTestCase {
     func testAsyncReduceWithChunkSize() async throws {
         let array = Array(1...10)
         
         // 合計を計算
-        let sum = await array.asyncReduce(0, chunkSize: 3) { result, element in
+        let sum = await array.pdslReduce(0, chunkSize: 3) { result, element in
             await Task.yield()
             return result + element
         }
         XCTAssertEqual(sum, 55)
         
         // 文字列を連結
-        let string = await array.asyncReduce("", chunkSize: 3) { result, element in
+        let string = await array.pdslReduce("", chunkSize: 3) { result, element in
             await Task.yield()
             return result + String(element)
         }
@@ -24,7 +24,7 @@ final class SequenceAsyncReduceChunkSizeTests: XCTestCase {
         let array = Array(1...10)
         
         // 配列に要素を追加
-        let result = await array.asyncReduce(into: [Int](), chunkSize: 3) { result, element in
+        let result = await array.pdslReduce(into: [Int](), chunkSize: 3) { result, element in
             await Task.yield()
             result.append(element * 2)
         }
@@ -34,13 +34,13 @@ final class SequenceAsyncReduceChunkSizeTests: XCTestCase {
     func testAsyncReduceWithEmptySequence() async throws {
         let array: [Int] = []
         
-        let sum = await array.asyncReduce(0, chunkSize: 3) { result, element in
+        let sum = await array.pdslReduce(0, chunkSize: 3) { result, element in
             await Task.yield()
             return result + element
         }
         XCTAssertEqual(sum, 0)
         
-        let result = await array.asyncReduce(into: [Int](), chunkSize: 3) { result, element in
+        let result = await array.pdslReduce(into: [Int](), chunkSize: 3) { result, element in
             await Task.yield()
             result.append(element)
         }
@@ -51,14 +51,14 @@ final class SequenceAsyncReduceChunkSizeTests: XCTestCase {
         let array = Array(1...100)
         
         // チャンクサイズが要素数より大きい場合
-        let sum1 = await array.asyncReduce(0, chunkSize: 200) { result, element in
+        let sum1 = await array.pdslReduce(0, chunkSize: 200) { result, element in
             await Task.yield()
             return result + element
         }
         XCTAssertEqual(sum1, 5050)
         
         // チャンクサイズが要素数より小さい場合
-        let sum2 = await array.asyncReduce(0, chunkSize: 10) { result, element in
+        let sum2 = await array.pdslReduce(0, chunkSize: 10) { result, element in
             await Task.yield()
             return result + element
         }
@@ -69,7 +69,7 @@ final class SequenceAsyncReduceChunkSizeTests: XCTestCase {
         let array = Array(1...10)
         
         do {
-            _ = try await array.asyncReduce(0, chunkSize: 3) { result, element in
+            _ = try await array.pdslReduce(0, chunkSize: 3) { result, element in
                 throw NSError(domain: "test", code: 1)
             }
             XCTFail("Should throw an error")
@@ -83,7 +83,7 @@ final class SequenceAsyncReduceChunkSizeTests: XCTestCase {
     func testAsyncReduceWithPriority() async throws {
         let array = Array(1...10)
         
-        let sum = await array.asyncReduce(
+        let sum = await array.pdslReduce(
             0,
             chunkSize: 3,
             priority: .high

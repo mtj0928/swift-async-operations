@@ -1,21 +1,21 @@
 import XCTest
-@testable import AsyncOperations
+@testable import PDSL
 
 final class SequenceAsyncContainsChunkSizeTests: XCTestCase {
     func testAsyncContainsWithChunkSize() async throws {
-        let containsResult = await [1, 2, 3].asyncContains(chunkSize: 2) { number in
+        let containsResult = await [1, 2, 3].pdslContains(chunkSize: 2) { number in
             return number == 2
         }
         XCTAssertTrue(containsResult)
 
-        let notContainsResult = await [1, 2, 3].asyncContains(chunkSize: 2) { number in
+        let notContainsResult = await [1, 2, 3].pdslContains(chunkSize: 2) { number in
             return number == 4
         }
         XCTAssertFalse(notContainsResult)
     }
     
     func testAsyncContainsWithEmptySequence() async throws {
-        let result = await [Int]().asyncContains(chunkSize: 2) { number in
+        let result = await [Int]().pdslContains(chunkSize: 2) { number in
             return number == 1
         }
         XCTAssertFalse(result)
@@ -24,12 +24,12 @@ final class SequenceAsyncContainsChunkSizeTests: XCTestCase {
     func testAsyncContainsWithLargeSequence() async throws {
         let array = Array(1...100)
         
-        let containsResult = await array.asyncContains(chunkSize: 10) { number in
+        let containsResult = await array.pdslContains(chunkSize: 10) { number in
             return number == 50
         }
         XCTAssertTrue(containsResult)
         
-        let notContainsResult = await array.asyncContains(chunkSize: 10) { number in
+        let notContainsResult = await array.pdslContains(chunkSize: 10) { number in
             return number == 101
         }
         XCTAssertFalse(notContainsResult)
@@ -39,13 +39,13 @@ final class SequenceAsyncContainsChunkSizeTests: XCTestCase {
         let array = Array(1...100)
         
         // チャンクサイズが要素数より大きい場合
-        let result1 = await array.asyncContains(chunkSize: 200) { number in
+        let result1 = await array.pdslContains(chunkSize: 200) { number in
             return number == 50
         }
         XCTAssertTrue(result1)
         
         // チャンクサイズが要素数より小さい場合
-        let result2 = await array.asyncContains(chunkSize: 10) { number in
+        let result2 = await array.pdslContains(chunkSize: 10) { number in
             return number == 75
         }
         XCTAssertTrue(result2)
@@ -55,7 +55,7 @@ final class SequenceAsyncContainsChunkSizeTests: XCTestCase {
         let array = Array(1...100)
         
         do {
-            _ = try await array.asyncContains(chunkSize: 20) { element in
+            _ = try await array.pdslContains(chunkSize: 20) { element in
                 throw NSError(domain: "test", code: 1)
             }
             XCTFail("Should throw an error")
@@ -69,7 +69,7 @@ final class SequenceAsyncContainsChunkSizeTests: XCTestCase {
     func testAsyncContainsWithPriority() async throws {
         let array = Array(1...100)
         
-        let result = await array.asyncContains(
+        let result = await array.pdslContains(
             chunkSize: 10,
             priority: .high
         ) { element in

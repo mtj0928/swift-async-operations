@@ -1,5 +1,5 @@
 import XCTest
-@testable import AsyncOperations
+@testable import PDSL
 
 actor ExecutionOrderTracker {
     private var order: [Int] = []
@@ -18,14 +18,14 @@ final class SequenceAsyncFirstChunkSizeTests: XCTestCase {
         let array = [1, 2, 3, 4, 5]
         
         // 条件を満たす要素が存在する場合
-        let result1 = await array.asyncFirst(chunkSize: 2) { number in
+        let result1 = await array.pdslFirst(chunkSize: 2) { number in
             await Task.yield()
             return number == 3
         }
         XCTAssertEqual(result1, 3)
         
         // 条件を満たす要素が存在しない場合
-        let result2 = await array.asyncFirst(chunkSize: 2) { number in
+        let result2 = await array.pdslFirst(chunkSize: 2) { number in
             await Task.yield()
             return number == 6
         }
@@ -35,7 +35,7 @@ final class SequenceAsyncFirstChunkSizeTests: XCTestCase {
     func testAsyncFirstWithEmptySequence() async throws {
         let array: [Int] = []
         
-        let result = await array.asyncFirst(chunkSize: 2) { number in
+        let result = await array.pdslFirst(chunkSize: 2) { number in
             await Task.yield()
             return number == 1
         }
@@ -46,14 +46,14 @@ final class SequenceAsyncFirstChunkSizeTests: XCTestCase {
         let array = Array(1...100)
         
         // チャンクサイズが要素数より小さい場合
-        let result1 = await array.asyncFirst(chunkSize: 10) { number in
+        let result1 = await array.pdslFirst(chunkSize: 10) { number in
             await Task.yield()
             return number == 50
         }
         XCTAssertEqual(result1, 50)
         
         // チャンクサイズが要素数より大きい場合
-        let result2 = await array.asyncFirst(chunkSize: 200) { number in
+        let result2 = await array.pdslFirst(chunkSize: 200) { number in
             await Task.yield()
             return number == 75
         }
@@ -64,14 +64,14 @@ final class SequenceAsyncFirstChunkSizeTests: XCTestCase {
         let array = Array(1...100)
         
         // チャンクサイズが1の場合（逐次処理に近い）
-        let result1 = await array.asyncFirst(chunkSize: 1) { number in
+        let result1 = await array.pdslFirst(chunkSize: 1) { number in
             await Task.yield()
             return number == 25
         }
         XCTAssertEqual(result1, 25)
         
         // チャンクサイズが要素数と同じ場合（並列処理）
-        let result2 = await array.asyncFirst(chunkSize: array.count) { number in
+        let result2 = await array.pdslFirst(chunkSize: array.count) { number in
             await Task.yield()
             return number == 50
         }
@@ -82,7 +82,7 @@ final class SequenceAsyncFirstChunkSizeTests: XCTestCase {
         let array = Array(1...100)
         
         do {
-            _ = try await array.asyncFirst(chunkSize: 20) { element in
+            _ = try await array.pdslFirst(chunkSize: 20) { element in
                 throw NSError(domain: "test", code: 1)
             }
             XCTFail("Should throw an error")
@@ -96,7 +96,7 @@ final class SequenceAsyncFirstChunkSizeTests: XCTestCase {
     func testAsyncFirstWithPriority() async throws {
         let array = Array(1...100)
         
-        let result = await array.asyncFirst(
+        let result = await array.pdslFirst(
             chunkSize: 10,
             priority: .high
         ) { element in
@@ -110,7 +110,7 @@ final class SequenceAsyncFirstChunkSizeTests: XCTestCase {
         let array = Array(1...100)
         let tracker = ExecutionOrderTracker()
         
-        let result = await array.asyncFirst(chunkSize: 10) { number in
+        let result = await array.pdslFirst(chunkSize: 10) { number in
             await Task.yield()
             await tracker.append(number)
             return number == 50

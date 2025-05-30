@@ -1,9 +1,9 @@
-import AsyncOperations
 import XCTest
+@testable import PDSL
 
 final class SequenceAsyncFilterChunkSizeTests: XCTestCase {
     func testAsyncFilterWithChunkSize() async throws {
-        let filteredNumbers = await [0, 1, 2, 3, 4].asyncFilter(
+        let filteredNumbers = await [0, 1, 2, 3, 4].pdslFilter(
             chunkSize: 2
         ) { number in
             await Task.yield()
@@ -14,7 +14,7 @@ final class SequenceAsyncFilterChunkSizeTests: XCTestCase {
     
     func testAsyncFilterWithDifferentChunkSizes() async throws {
         // チャンクサイズが要素数より大きい場合
-        let result1 = await [0, 1, 2].asyncFilter(
+        let result1 = await [0, 1, 2].pdslFilter(
             chunkSize: 5
         ) { number in
             await Task.yield()
@@ -23,7 +23,7 @@ final class SequenceAsyncFilterChunkSizeTests: XCTestCase {
         XCTAssertEqual(result1, [0, 2])
         
         // チャンクサイズが1の場合（個別処理と同等）
-        let result2 = await [0, 1, 2].asyncFilter(
+        let result2 = await [0, 1, 2].pdslFilter(
             chunkSize: 1
         ) { number in
             await Task.yield()

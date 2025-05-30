@@ -1,3 +1,5 @@
+import AsyncOperations
+
 extension Sequence where Element: Sendable {
     /// An internal function that processes elements in chunks with a specified limit on concurrent tasks.
     /// - Parameters:
@@ -9,7 +11,7 @@ extension Sequence where Element: Sendable {
     ///   - chunkSize: A size of chunk for processing elements.
     ///   - taskOperation: An operation to perform on each element.
     ///   - nextOperation: A closure to execute with the result of each operation.
-    public func internalForEach<T: Sendable>(
+    public func pdslInternalForEach<T: Sendable>(
         group: inout ThrowingOrderedTaskGroup<[T], any Error>,
         numberOfConcurrentTasks: UInt,
         priority: TaskPriority?,

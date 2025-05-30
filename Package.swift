@@ -7,10 +7,13 @@ let package = Package(
     platforms: [.macOS(.v13), .iOS(.v16), .watchOS(.v9), .macCatalyst(.v16), .tvOS(.v16), .visionOS(.v1)],
     products: [
         .library(name: "AsyncOperations", targets: ["AsyncOperations"]),
+        .library(name: "PDSL", targets: ["PDSL"]),
     ],
     targets: [
         .target(name: "AsyncOperations"),
         .testTarget(name: "AsyncOperationsTests", dependencies: ["AsyncOperations"]),
+        .target(name: "PDSL", dependencies: ["AsyncOperations"]),
+        .testTarget(name: "PDSLTests", dependencies: ["PDSL", "AsyncOperations"]),
     ]
 )
 

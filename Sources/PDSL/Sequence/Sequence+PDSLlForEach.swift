@@ -1,3 +1,5 @@
+import AsyncOperations
+
 extension Sequence where Element: Sendable {
     /// An async function of `forEach` with chunk size control.
     /// - Parameters:
@@ -7,14 +9,14 @@ extension Sequence where Element: Sendable {
     ///     to set the child task's priority to the priority of the group.
     ///   - chunkSize: A size of chunk for processing elements.
     ///   - body: A similar closure with `forEach`'s one, but it's async.
-    public func asyncForEach(
+    public func pdslForEach(
         numberOfConcurrentTasks: UInt = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
         chunkSize: UInt,
         _ body: @escaping @Sendable (Element) async throws -> Void
     ) async rethrows {
         try await withThrowingOrderedTaskGroup(of: [Void].self) { group in
-            try await internalForEach(
+            try await pdslInternalForEach(
                 group: &group,
                 numberOfConcurrentTasks: numberOfConcurrentTasks,
                 priority: priority,
