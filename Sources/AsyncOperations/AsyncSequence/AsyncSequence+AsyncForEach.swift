@@ -31,7 +31,7 @@ extension AsyncSequence where Element: Sendable {
         numberOfConcurrentTasks: UInt = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
         _ body: @escaping @Sendable (Element) async throws -> Void
-    ) async rethrows {
+    ) async rethrows  where Self: Sendable {
         try await withThrowingOrderedTaskGroup(of: Void.self) { group in
             var counter = 0
             var asyncIterator = self.makeAsyncIterator()
