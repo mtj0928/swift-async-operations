@@ -1,14 +1,15 @@
 # swift-async-operations
-A library extending the capability of async operations.
+A library extending the capabilities of async operations.
 
 ## Motivation
-Swift concurrency is powerful language feature, but there are not APIs operating an array for swift concurrency.
-A developer is required to write redundant code.
+Swift concurrency is a powerful language feature, but there are no convenient APIs for array operations with Swift concurrency.
+Developers often have to write redundant code.
+
 ```swift
 var results: [Int] = [] // ☹️ var is required.
 for await element in [0, 1, 2, 3, 4] {
     let newElement = try await twice(element)
-    result.append(newElement)
+    results.append(newElement)
 }
 print(results) // [0, 2, 4, 6, 8]
 ```
@@ -67,7 +68,7 @@ try await [1, 2, 3].asyncForEach { number in
 }
 ```
 
-The closure runs sequential by default.
+The closure runs sequentially by default.
 
 ```
 Start: 1
@@ -150,7 +151,7 @@ let results = await withTaskGroup(of: Int.self) { group in
 print(results) // ☹️ [0, 4, 2, 6, 10, 8]
 ```
 
-However, ordered `for await` is required in some of situations like converting an array to a new array.
+However, ordered `for await` is required in some situations like converting an array to a new array.
 
 [withOrderedTaskGroup](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/withorderedtaskgroup(of:returning:isolation:body:)) and [withThrowingOrderedTaskGroup](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/withthrowingorderedtaskgroup(of:returning:isolation:body:)) satisfy such requirements.
 ```swift
@@ -183,5 +184,5 @@ dependencies: [
 ]
 ```
 
-## Documentations
+## Documentation
 Please see [the DocC pages](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/)
