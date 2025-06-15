@@ -1,4 +1,4 @@
-extension Sequence where Element: Sendable {
+extension Sequence where Element: Sendable, Self: Sendable {
     func internalForEach<T: Sendable>(
         group: inout ThrowingOrderedTaskGroup<T, any Error>,
         numberOfConcurrentTasks: UInt,

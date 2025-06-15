@@ -1,4 +1,4 @@
-extension Sequence where Element: Sendable {
+extension Sequence where Element: Sendable, Self: Sendable {
     /// An async function of `first`.
     /// - Parameters:
     ///   - numberOfConcurrentTasks: A number of concurrent tasks. the given `predicate` closure run in parallel when the value is 2 or more.
