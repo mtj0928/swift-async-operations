@@ -53,7 +53,7 @@ extension Sequence where Element: Sendable {
         try await withThrowingOrderedTaskGroup(of: [T?].self) { group in
             var values: [T] = []
             
-            try await internalForEach(
+            try await pdslInternalForEach(
                 group: &group,
                 priority: priority,
                 chunkSize: chunkSize,
