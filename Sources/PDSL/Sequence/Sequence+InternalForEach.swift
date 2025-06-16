@@ -13,9 +13,9 @@ extension Sequence where Element: Sendable {
     ///   - nextOperation: A closure to execute with the result of each operation.
     public func pdslInternalForEach<T: Sendable>(
         group: inout ThrowingOrderedTaskGroup<[T], any Error>,
-        numberOfConcurrentTasks: UInt,
+        numberOfConcurrentTasks: Int,
         priority: TaskPriority?,
-        chunkSize: UInt,
+        chunkSize: Int? = nil,
         taskOperation: @escaping @Sendable (Element) async throws -> T,
         nextOperation: (T) -> ()
     ) async throws {
@@ -60,12 +60,13 @@ extension Sequence where Element: Sendable {
     public func pdslInternalForEach<T: Sendable>(
         group: inout ThrowingOrderedTaskGroup<[T], any Error>,
         priority: TaskPriority?,
-        chunkSize: UInt,
+        chunkSize: Int? = nil,
         taskOperation: @escaping @Sendable (Element) async throws -> T,
         nextOperation: (T) -> ()
     ) async throws {
         var currentChunk: [Element] = []
         let elementsCount = Array(self).count
+        let chunkSize: Int = chunkSize ?? (elementsCount / numberOfConcurrentTasks + 1)
         
         for (index, element) in self.enumerated() {
             currentChunk.append(element)
@@ -93,12 +94,13 @@ extension Sequence where Element: Sendable {
     public func pdslChunkedInternalForEach<T: Sendable>(
         group: inout ThrowingOrderedTaskGroup<[T], any Error>,
         priority: TaskPriority?,
-        chunkSize: UInt,
+        chunkSize: Int? = nil,
         taskOperation: @escaping @Sendable (Element) async throws -> T,
         nextOperation: ([T]) -> ()
     ) async throws {
         var currentChunk: [Element] = []
         let elementsCount = Array(self).count
+        let chunkSize: Int = chunkSize ?? (elementsCount / numberOfConcurrentTasks + 1)
         
         for (index, element) in self.enumerated() {
             currentChunk.append(element)

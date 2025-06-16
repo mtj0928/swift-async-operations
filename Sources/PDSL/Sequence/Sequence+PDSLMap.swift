@@ -11,9 +11,9 @@ extension Sequence where Element: Sendable {
     ///   - transform: A similar closure with `map`'s one, but it's async.
     /// - Returns: A transformed array.
     public func pdslMap<T: Sendable>(
-        numberOfConcurrentTasks: UInt = numberOfConcurrentTasks,
+        numberOfConcurrentTasks: Int = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
-        chunkSize: UInt,
+        chunkSize: Int? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> T
     ) async rethrows -> [T] {
         try await withThrowingOrderedTaskGroup(of: [T].self) { group in
@@ -43,9 +43,8 @@ extension Sequence where Element: Sendable {
     ///   - transform: A similar closure with `map`'s one, but it's async.
     /// - Returns: A chunked array.
     public func pdslChunkedMap<T: Sendable>(
-        numberOfConcurrentTasks: UInt = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
-        chunkSize: UInt,
+        chunkSize: Int? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> T
     ) async rethrows -> ChunkedArray<T> {
         try await withThrowingOrderedTaskGroup(of: [T].self) { group in

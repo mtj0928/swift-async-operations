@@ -11,9 +11,9 @@ extension Sequence where Element: Sendable {
     ///   - isIncluded: A similar closure with `filter`'s one, but it's async.
     /// - Returns: A filtered array which has only elements which satisfy the `isIncluded`.
     public func pdslFilter(
-        numberOfConcurrentTasks: UInt = numberOfConcurrentTasks,
+        numberOfConcurrentTasks: Int = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
-        chunkSize: UInt,
+        chunkSize: Int? = nil,
         _ isIncluded: @escaping @Sendable (Element) async throws -> Bool
     ) async rethrows -> [Element] {
         try await withThrowingOrderedTaskGroup(of: [Element?].self) { group in
@@ -47,9 +47,9 @@ extension Sequence where Element: Sendable {
     ///   - isIncluded: A similar closure with `filter`'s one, but it's async.
     /// - Returns: A chunked array.
     public func pdslChunkedFilter(
-        numberOfConcurrentTasks: UInt = numberOfConcurrentTasks,
+        numberOfConcurrentTasks: Int = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
-        chunkSize: UInt,
+        chunkSize: Int? = nil,
         _ isIncluded: @escaping @Sendable (Element) async throws -> Bool
     ) async rethrows -> ChunkedArray<Element> {
         try await withThrowingOrderedTaskGroup(of: [Element?].self) { group in

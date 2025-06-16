@@ -8,13 +8,15 @@ extension Sequence where Element: Sendable {
     ///   - predicate: async で判定する述語クロージャ。
     /// - Returns: 条件を満たす最初の要素。なければ nil。
     public func pdslFirst(
-        chunkSize: Int,
+        chunkSize: Int? = nil,
         priority: TaskPriority? = nil,
         where predicate: @escaping @Sendable (Element) async throws -> Bool
     ) async rethrows -> Element? {
         let elements = Array(self)
-        let chunks = stride(from: 0, to: elements.count, by: chunkSize).map {
-            Array(elements[$0..<Swift.min($0 + chunkSize, elements.count)])
+        let elementsCount = elements.count
+        let chunkSize = chunkSize ?? (elementsCount / numberOfConcurrentTasks + 1)
+        let chunks = stride(from: 0, to: elementsCount, by: chunkSize).map {
+            Array(elements[$0..<Swift.min($0 + chunkSize, elementsCount)])
         }
         
         return try await withThrowingTaskGroup(of: Element?.self) { group in

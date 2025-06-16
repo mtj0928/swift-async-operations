@@ -9,7 +9,7 @@ extension SequenceChunks {
     ///   - predicate: A predicate closure.
     /// - Returns: A chunked array.
     public func pdslChunkedFilter(
-        numberOfConcurrentTasks: UInt = sequenceChunksDefaultConcurrentTasks,
+        numberOfConcurrentTasks: Int = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
         _ predicate: @escaping @Sendable (Element) async throws -> Bool
     ) async rethrows -> ChunkedArray<Element> {
@@ -45,7 +45,7 @@ extension SequenceChunks {
     ///   - predicate: A predicate closure.
     /// - Returns: A flattened array.
     public func pdslFilter(
-        numberOfConcurrentTasks: UInt = sequenceChunksDefaultConcurrentTasks,
+        numberOfConcurrentTasks: Int = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
         _ predicate: @escaping @Sendable (Element) async throws -> Bool
     ) async rethrows -> [Element] {

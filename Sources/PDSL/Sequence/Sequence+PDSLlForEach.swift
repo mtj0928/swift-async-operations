@@ -10,9 +10,9 @@ extension Sequence where Element: Sendable {
     ///   - chunkSize: A size of chunk for processing elements.
     ///   - body: A similar closure with `forEach`'s one, but it's async.
     public func pdslForEach(
-        numberOfConcurrentTasks: UInt = numberOfConcurrentTasks,
+        numberOfConcurrentTasks: Int = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
-        chunkSize: UInt,
+        chunkSize: Int? = nil,
         _ body: @escaping @Sendable (Element) async throws -> Void
     ) async rethrows {
         try await withThrowingOrderedTaskGroup(of: [Void].self) { group in

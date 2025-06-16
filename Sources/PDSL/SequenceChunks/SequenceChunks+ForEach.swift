@@ -8,7 +8,7 @@ extension SequenceChunks {
     ///   - priority: The priority of the operation task.
     ///   - body: A closure to execute for each element.
     public func pdslForEach(
-        numberOfConcurrentTasks: UInt = sequenceChunksDefaultConcurrentTasks,
+        numberOfConcurrentTasks: Int = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
         _ body: @escaping @Sendable (Element) async throws -> Void
     ) async rethrows {

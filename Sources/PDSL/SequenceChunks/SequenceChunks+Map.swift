@@ -3,7 +3,6 @@ import Foundation
 
 extension SequenceChunks {
     public func pdslChunkedMap<T: Sendable>(
-        numberOfConcurrentTasks: UInt = sequenceChunksDefaultConcurrentTasks,
         priority: TaskPriority? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> T
     ) async rethrows -> ChunkedArray<T> {
@@ -30,12 +29,11 @@ extension SequenceChunks {
     }
     
     public func pdslMap<T: Sendable>(
-        numberOfConcurrentTasks: UInt = sequenceChunksDefaultConcurrentTasks,
+        numberOfConcurrentTasks: Int = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> T
     ) async rethrows -> [T] {
         let chunkedResult = try await pdslChunkedMap(
-            numberOfConcurrentTasks: numberOfConcurrentTasks,
             priority: priority,
             transform
         )

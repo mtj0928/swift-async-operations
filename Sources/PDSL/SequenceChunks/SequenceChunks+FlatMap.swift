@@ -9,7 +9,7 @@ extension SequenceChunks {
     ///   - transform: A transform closure that returns an array.
     /// - Returns: A chunked array.
     public func pdslChunkedFlatMap<T: Sendable>(
-        numberOfConcurrentTasks: UInt = sequenceChunksDefaultConcurrentTasks,
+        numberOfConcurrentTasks: Int = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> [T]
     ) async rethrows -> ChunkedArray<T> {
@@ -44,7 +44,7 @@ extension SequenceChunks {
     ///   - transform: A transform closure that returns an array.
     /// - Returns: A flattened array.
     public func pdslFlatMap<T: Sendable>(
-        numberOfConcurrentTasks: UInt = sequenceChunksDefaultConcurrentTasks,
+        numberOfConcurrentTasks: Int = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> [T]
     ) async rethrows -> [T] {

@@ -4,12 +4,10 @@ import Foundation
 extension SequenceChunks {
     /// Transforms each element with given closure and compacts, returns chunked results.
     /// - Parameters:
-    ///   - numberOfConcurrentTasks: A number of concurrent tasks.
     ///   - priority: The priority of the operation task.
     ///   - transform: A transform closure that may return nil.
     /// - Returns: A chunked array.
     public func pdslChunkedCompactMap<T: Sendable>(
-        numberOfConcurrentTasks: UInt = sequenceChunksDefaultConcurrentTasks,
         priority: TaskPriority? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> T?
     ) async rethrows -> ChunkedArray<T> {
@@ -43,12 +41,10 @@ extension SequenceChunks {
     ///   - transform: A transform closure that may return nil.
     /// - Returns: A flattened array.
     public func pdslCompactMap<T: Sendable>(
-        numberOfConcurrentTasks: UInt = sequenceChunksDefaultConcurrentTasks,
         priority: TaskPriority? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> T?
     ) async rethrows -> [T] {
         let chunkedResult = try await pdslChunkedCompactMap(
-            numberOfConcurrentTasks: numberOfConcurrentTasks,
             priority: priority,
             transform
         )

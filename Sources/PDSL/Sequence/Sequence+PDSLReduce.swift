@@ -2,13 +2,15 @@ extension Sequence where Element: Sendable {
     /// An async function of `reduce` with chunk size.
     public func pdslReduce<Result: Sendable>(
         _ initialResult: Result,
-        chunkSize: Int,
+        chunkSize: Int? = nil,
         priority: TaskPriority? = nil,
         _ nextPartialResult: @escaping @Sendable (Result, Element) async throws -> Result
     ) async rethrows -> Result {
-        let array = Array(self)
-        let chunks = stride(from: 0, to: array.count, by: chunkSize).map {
-            Array(array[$0..<Swift.min($0 + chunkSize, array.count)])
+        let elements = Array(self)
+        let elementsCount = elements.count
+        let chunkSize = chunkSize ?? (elementsCount / numberOfConcurrentTasks + 1)
+        let chunks = stride(from: 0, to: elementsCount, by: chunkSize).map {
+            Array(elements[$0..<Swift.min($0 + chunkSize, elementsCount)])
         }
         
         var result = initialResult
@@ -33,13 +35,15 @@ extension Sequence where Element: Sendable {
     /// An async function of `reduce` with chunk size.
     public func pdslReduce<Result: Sendable>(
         into initialResult: Result,
-        chunkSize: Int,
+        chunkSize: Int? = nil,
         priority: TaskPriority? = nil,
         _ updateAccumulatingResult: @escaping @Sendable (inout Result, Element) async throws -> ()
     ) async rethrows -> Result {
-        let array = Array(self)
-        let chunks = stride(from: 0, to: array.count, by: chunkSize).map {
-            Array(array[$0..<Swift.min($0 + chunkSize, array.count)])
+        let elements = Array(self)
+        let elementsCount = elements.count
+        let chunkSize = chunkSize ?? (elementsCount / numberOfConcurrentTasks + 1)
+        let chunks = stride(from: 0, to: elementsCount, by: chunkSize).map {
+            Array(elements[$0..<Swift.min($0 + chunkSize, elementsCount)])
         }
         
         var result = initialResult

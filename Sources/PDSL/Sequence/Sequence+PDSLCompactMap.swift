@@ -14,9 +14,9 @@ extension Sequence where Element: Sendable {
     
     
     public func pdslCompactMap<T: Sendable>(
-        numberOfConcurrentTasks: UInt = numberOfConcurrentTasks,
+        numberOfConcurrentTasks: Int = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
-        chunkSize: UInt,
+        chunkSize: Int? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> T?
     ) async rethrows -> [T] {
         try await withThrowingOrderedTaskGroup(of: [T?].self) { group in
@@ -47,7 +47,7 @@ extension Sequence where Element: Sendable {
     ///
     public func pdslCompactMap<T: Sendable>(
         priority: TaskPriority? = nil,
-        chunkSize: UInt,
+        chunkSize: Int? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> T?
     ) async rethrows -> [T] {
         try await withThrowingOrderedTaskGroup(of: [T?].self) { group in
@@ -77,7 +77,7 @@ extension Sequence where Element: Sendable {
     /// - Returns: A chunked array.
     public func pdslChunkedCompactMap<T: Sendable>(
         priority: TaskPriority? = nil,
-        chunkSize: UInt,
+        chunkSize: Int? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> T?
     ) async rethrows -> ChunkedArray<T> {
         try await withThrowingOrderedTaskGroup(of: [T?].self) { group in

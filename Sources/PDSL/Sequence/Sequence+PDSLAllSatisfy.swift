@@ -8,13 +8,15 @@ extension Sequence where Element: Sendable {
     ///   - predicate: A similar closure with `allSatisfy`'s one, but it's async.
     /// - Returns: `true` if all elements satisfy the `predicate`. `false` if not.
     public func pdslAllSatisfy(
-        chunkSize: Int,
+        chunkSize: Int? = nil,
         priority: TaskPriority? = nil,
         _ predicate: @escaping @Sendable (Element) async throws -> Bool
     ) async rethrows -> Bool {
         let elements = Array(self)
-        let chunks = stride(from: 0, to: elements.count, by: chunkSize).map {
-            Array(elements[$0..<Swift.min($0 + chunkSize, elements.count)])
+        let elementsCount = elements.count
+        let chunkSize = chunkSize ?? (elementsCount / numberOfConcurrentTasks + 1)
+        let chunks = stride(from: 0, to: elementsCount, by: chunkSize).map {
+            Array(elements[$0..<Swift.min($0 + chunkSize, elementsCount)])
         }
         
         return try await withThrowingTaskGroup(of: Bool.self) { group in
