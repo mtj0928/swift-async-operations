@@ -37,21 +37,4 @@ extension Sequence where Element: Sendable {
             return true
         }
     }
-
-    /// An async function of `allSatisfy` that processes elements in chunks and returns chunked result.
-    /// - Parameters:
-    ///   - chunkSize: The number of elements to process in each chunk.
-    ///   - priority: The priority of the operation task.
-    ///     Omit this parameter or pass `.unspecified`
-    ///     to set the child task's priority to the priority of the group.
-    ///   - predicate: A similar closure with `allSatisfy`'s one, but it's async.
-    /// - Returns: A chunked array containing the result. Since allSatisfy returns Bool, this returns a chunk with one Bool.
-    public func pdslChunkedAllSatisfy(
-        chunkSize: Int,
-        priority: TaskPriority? = nil,
-        _ predicate: @escaping @Sendable (Element) async throws -> Bool
-    ) async rethrows -> ChunkedArray<Bool> {
-        let result = try await pdslAllSatisfy(chunkSize: chunkSize, priority: priority, predicate)
-        return ChunkedArray(chunks: [[result]])
-    }
 }

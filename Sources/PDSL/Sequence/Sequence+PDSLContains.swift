@@ -37,21 +37,4 @@ extension Sequence where Element: Sendable {
             return false
         }
     }
-
-    /// An async function of `contains` that processes elements in chunks and returns chunked result.
-    /// - Parameters:
-    ///   - chunkSize: The number of elements to process in each chunk.
-    ///   - priority: The priority of the operation task.
-    ///     Omit this parameter or pass `.unspecified`
-    ///     to set the child task's priority to the priority of the group.
-    ///   - predicate: A similar closure with `contains`'s one, but it's async.
-    /// - Returns: A chunked array containing the result. Since contains returns Bool, this returns an empty chunk if false, or a chunk with one Bool if true.
-    public func pdslChunkedContains(
-        chunkSize: Int,
-        priority: TaskPriority? = nil,
-        where predicate: @escaping @Sendable (Element) async throws -> Bool
-    ) async rethrows -> ChunkedArray<Bool> {
-        let result = try await pdslContains(chunkSize: chunkSize, priority: priority, where: predicate)
-        return ChunkedArray(chunks: [[result]])
-    }
 }

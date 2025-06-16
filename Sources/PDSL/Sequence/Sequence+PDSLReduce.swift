@@ -60,42 +60,4 @@ extension Sequence where Element: Sendable {
         
         return result
     }
-
-    /// An async function of `reduce` that returns chunked result.
-    /// - Parameters:
-    ///   - chunkSize: The number of elements to process in each chunk.
-    ///   - initialResult: The initial result value.
-    ///   - priority: The priority of the operation task.
-    ///     Omit this parameter or pass `.unspecified`
-    ///     to set the child task's priority to the priority of the group.
-    ///   - nextPartialResult: A closure that combines the previous result with the next element.
-    /// - Returns: A chunked array containing the result. Since reduce returns a single value, this returns a chunk with one element.
-    public func pdslChunkedReduce<Result: Sendable>(
-        chunkSize: Int,
-        _ initialResult: Result,
-        priority: TaskPriority? = nil,
-        _ nextPartialResult: @escaping @Sendable (Result, Element) async throws -> Result
-    ) async rethrows -> ChunkedArray<Result> {
-        let result = try await pdslReduce(initialResult, chunkSize: chunkSize, priority: priority, nextPartialResult)
-        return ChunkedArray(chunks: [[result]])
-    }
-    
-    /// An async function of `reduce` into chunked result.
-    /// - Parameters:
-    ///   - chunkSize: The number of elements to process in each chunk.
-    ///   - initialResult: The initial result value to start with.
-    ///   - priority: The priority of the operation task.
-    ///     Omit this parameter or pass `.unspecified`
-    ///     to set the child task's priority to the priority of the group.
-    ///   - updateAccumulatingResult: A closure that updates the accumulating result with each element.
-    /// - Returns: A chunked array containing the result. Since reduce returns a single value, this returns a chunk with one element.
-    public func pdslChunkedReduce<Result: Sendable>(
-        chunkSize: Int,
-        into initialResult: Result,
-        priority: TaskPriority? = nil,
-        _ updateAccumulatingResult: @escaping @Sendable (inout Result, Element) async throws -> ()
-    ) async rethrows -> ChunkedArray<Result> {
-        let result = try await pdslReduce(into: initialResult, chunkSize: chunkSize, priority: priority, updateAccumulatingResult)
-        return ChunkedArray(chunks: [[result]])
-    }
 }
