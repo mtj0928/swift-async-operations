@@ -56,15 +56,7 @@ extension Sequence where Element: Sendable {
             }
         }
     }
-
-    /// An internal function that processes elements in chunks without limiting concurrent tasks.
-    /// No limit on the number of concurrent tasks.
-    /// - Parameters:
-    ///   - group: A throwing ordered task group to add tasks to.
-    ///   - priority: A priority of the task.
-    ///   - chunkSize: A size of chunk for processing elements.
-    ///   - taskOperation: An operation to perform on each element.
-    ///   - nextOperation: A closure to execute with the result of each operation.
+    
     public func pdslInternalForEach<T: Sendable>(
         group: inout ThrowingOrderedTaskGroup<[T], any Error>,
         priority: TaskPriority?,

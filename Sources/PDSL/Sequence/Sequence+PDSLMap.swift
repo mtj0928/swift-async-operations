@@ -49,21 +49,18 @@ extension Sequence where Element: Sendable {
         _ transform: @escaping @Sendable (Element) async throws -> T
     ) async rethrows -> ChunkedArray<T> {
         try await withThrowingOrderedTaskGroup(of: [T].self) { group in
-            var chunkedValues: [[T]] = []
+            var resultChunks: [[T]] = []
 
-            try await pdslInternalForEach(
+            try await pdslChunkedInternalForEach(
                 group: &group,
-                numberOfConcurrentTasks: numberOfConcurrentTasks,
                 priority: priority,
                 chunkSize: chunkSize,
                 taskOperation: transform
-            ) { _ in }
-
-            for try await chunk in group {
-                chunkedValues.append(chunk)
+            ) {
+                resultChunks.append($0)
             }
 
-            return ChunkedArray(chunks: chunkedValues)
+            return ChunkedArray(chunks: resultChunks)
         }
     }
 }

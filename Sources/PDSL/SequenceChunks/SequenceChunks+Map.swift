@@ -2,12 +2,6 @@ import AsyncOperations
 import Foundation
 
 extension SequenceChunks {
-    /// Transforms each element with given closure and returns chunked results.
-    /// - Parameters:
-    ///   - numberOfConcurrentTasks: A number of concurrent tasks.
-    ///   - priority: The priority of the operation task.
-    ///   - transform: A transform closure.
-    /// - Returns: A chunked array.
     public func pdslChunkedMap<T: Sendable>(
         numberOfConcurrentTasks: UInt = sequenceChunksDefaultConcurrentTasks,
         priority: TaskPriority? = nil,
@@ -35,12 +29,6 @@ extension SequenceChunks {
         }
     }
     
-    /// Transforms each element with given closure and returns a flattened array.
-    /// - Parameters:
-    ///   - numberOfConcurrentTasks: A number of concurrent tasks.
-    ///   - priority: The priority of the operation task.
-    ///   - transform: A transform closure.
-    /// - Returns: A flattened array.
     public func pdslMap<T: Sendable>(
         numberOfConcurrentTasks: UInt = sequenceChunksDefaultConcurrentTasks,
         priority: TaskPriority? = nil,

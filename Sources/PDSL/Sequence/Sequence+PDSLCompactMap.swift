@@ -83,15 +83,14 @@ extension Sequence where Element: Sendable {
         try await withThrowingOrderedTaskGroup(of: [T?].self) { group in
             var chunkedValues: [[T]] = []
 
-            try await pdslInternalForEach(
+            // TODO: chunk.compactMap で O(n) 回したくない（compactMap 専用 internal 作る？）
+            try await pdslChunkedInternalForEach(
                 group: &group,
                 priority: priority,
                 chunkSize: chunkSize,
                 taskOperation: transform
             ) { chunk in
-                if let chunk = chunk {
-                    chunkedValues.append([chunk])
-                }
+                chunkedValues.append(chunk.compactMap { $0 })
             }
 
             return ChunkedArray(chunks: chunkedValues)
