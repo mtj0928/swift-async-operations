@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "swift-async-operations",
-    platforms: [.macOS(.v13), .iOS(.v16), .watchOS(.v9), .macCatalyst(.v16), .tvOS(.v16), .visionOS(.v1)],
+    platforms: [.macOS(.v15), .iOS(.v18), .watchOS(.v11), .macCatalyst(.v18), .tvOS(.v18), .visionOS(.v2)],
     products: [
         .library(name: "AsyncOperations", targets: ["AsyncOperations"]),
         .library(name: "PDSL", targets: ["PDSL"]),

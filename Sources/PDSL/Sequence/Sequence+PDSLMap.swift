@@ -32,4 +32,38 @@ extension Sequence where Element: Sendable {
             return values
         }
     }
+
+    /// An async function of `map` with chunk size control that returns chunked results.
+    /// - Parameters:
+    ///   - numberOfConcurrentTasks: A number of concurrent tasks. the given `transform` closure run in parallel when the value is 2 or more.
+    ///   - priority: The priority of the operation task.
+    ///     Omit this parameter or pass `.unspecified`
+    ///     to set the child task's priority to the priority of the group.
+    ///   - chunkSize: A size of chunk for processing elements.
+    ///   - transform: A similar closure with `map`'s one, but it's async.
+    /// - Returns: A chunked array.
+    public func pdslChunkedMap<T: Sendable>(
+        numberOfConcurrentTasks: UInt = numberOfConcurrentTasks,
+        priority: TaskPriority? = nil,
+        chunkSize: UInt,
+        _ transform: @escaping @Sendable (Element) async throws -> T
+    ) async rethrows -> ChunkedArray<T> {
+        try await withThrowingOrderedTaskGroup(of: [T].self) { group in
+            var chunkedValues: [[T]] = []
+
+            try await pdslInternalForEach(
+                group: &group,
+                numberOfConcurrentTasks: numberOfConcurrentTasks,
+                priority: priority,
+                chunkSize: chunkSize,
+                taskOperation: transform
+            ) { _ in }
+
+            for try await chunk in group {
+                chunkedValues.append(chunk)
+            }
+
+            return ChunkedArray(chunks: chunkedValues)
+        }
+    }
 }
