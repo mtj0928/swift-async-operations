@@ -1,4 +1,4 @@
-extension Sequence where Element: Sendable {
+extension Sequence where Element: Sendable, Self: Sendable {
     /// An async function of `reduce` with chunk size.
     public func pdslReduce<Result: Sendable>(
         _ initialResult: Result,

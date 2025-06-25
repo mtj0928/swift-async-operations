@@ -1,6 +1,6 @@
 import AsyncOperations
 
-extension Sequence where Element: Sendable {
+extension Sequence where Element: Sendable, Self: Sendable {
     /// An internal function that processes elements in chunks with a specified limit on concurrent tasks.
     /// - Parameters:
     ///   - group: A throwing ordered task group to add tasks to.

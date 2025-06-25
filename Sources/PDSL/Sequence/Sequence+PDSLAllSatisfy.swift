@@ -1,4 +1,4 @@
-extension Sequence where Element: Sendable {
+extension Sequence where Element: Sendable, Self: Sendable {
     /// An async function of `allSatisfy` that processes elements in chunks.
     /// - Parameters:
     ///   - chunkSize: The number of elements to process in each chunk.

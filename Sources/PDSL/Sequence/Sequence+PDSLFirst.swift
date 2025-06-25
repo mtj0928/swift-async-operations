@@ -1,4 +1,4 @@
-extension Sequence where Element: Sendable {
+extension Sequence where Element: Sendable, Self: Sendable {
     /// チャンクサイズ指定可能な asyncFirst。
     /// - Parameters:
     ///   - chunkSize: 各チャンクで並列に処理する要素数。

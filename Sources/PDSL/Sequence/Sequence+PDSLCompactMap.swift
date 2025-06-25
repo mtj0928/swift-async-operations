@@ -1,6 +1,6 @@
 import AsyncOperations
 
-extension Sequence where Element: Sendable {
+extension Sequence where Element: Sendable, Self: Sendable {
     /// An async function of `compactMap` with chunk size control.
     /// - Parameters:
     ///   - numberOfConcurrentTasks: A number of concurrent tasks. the given `transform` closure run in parallel when the value is 2 or more.
