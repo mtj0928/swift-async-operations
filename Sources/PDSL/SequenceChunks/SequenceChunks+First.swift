@@ -11,7 +11,7 @@ extension SequenceChunks {
         priority: TaskPriority? = nil,
         where predicate: @escaping @Sendable (Element) async throws -> Bool
     ) async rethrows -> Element? {
-        return try await withThrowingTaskGroup(of: Element?.self) { group in
+        return try await withThrowingOrderedTaskGroup(of: Element?.self) { group in
             for chunk in chunks {
                 group.addTask(priority: priority) {
                     for element in chunk {

@@ -1,3 +1,5 @@
+import AsyncOperations
+
 extension Sequence where Element: Sendable, Self: Sendable {
     /// チャンクサイズ指定可能な asyncFirst。
     /// - Parameters:
@@ -19,7 +21,7 @@ extension Sequence where Element: Sendable, Self: Sendable {
             Array(elements[$0..<Swift.min($0 + chunkSize, elementsCount)])
         }
         
-        return try await withThrowingTaskGroup(of: Element?.self) { group in
+        return try await withThrowingOrderedTaskGroup(of: Element?.self) { group in
             for chunk in chunks {
                 group.addTask(priority: priority) {
                     for element in chunk {
