@@ -28,13 +28,13 @@ final class MapFilterFirstTests: XCTestCase {
             .filter(filterOperation)
             .first(where: firstOperation)
         
-        // 提案手法
+        // 改良実装
         let pdslResult = await array
             .pdslMap(mapOperation)
             .pdslFilter(filterOperation)
             .pdslFirst(where: firstOperation)
         
-        // 提案手法_チャンク
+        // 改良実装_チャンク
         let pdslChunkedResult = await array
             .pdslChunkedMap(mapOperation)
             .pdslChunkedFilter(filterOperation)
