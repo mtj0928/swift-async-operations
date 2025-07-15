@@ -5,6 +5,7 @@
 import Foundation
 
 public let numberOfConcurrentTasks: Int = {
-    let processorCount = ProcessInfo.processInfo.processorCount
-    return Int(max(1, processorCount))
+//    let processorCount = ProcessInfo.processInfo.processorCount
+//    return Int(max(1, processorCount))
+    return 10
 }()
