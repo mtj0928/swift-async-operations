@@ -11,7 +11,7 @@ extension Sequence where Element: Sendable, Self: Sendable {
         try await withThrowingTaskGroup(of: (startIndex: Int, results: [T]).self) { group in
             var currentChunk: [Element] = []
             let elementsCount = Array(self).count
-            let chunkSize: Int = chunkSize ?? (elementsCount / numberOfConcurrentTasks + 1)
+            let chunkSize: Int = chunkSize ?? (elementsCount / numberOfConcurrentTasks)
             
             for (index, element) in self.enumerated() {
                 currentChunk.append(element)
@@ -233,6 +233,7 @@ extension Sequence where Element: Sendable, Self: Sendable {
         var currentChunk: [Element] = []
         let elementsCount = Array(self).count
         var availableConcurrentTasks = numberOfConcurrentTasks
+        let chunkSize: Int = chunkSize ?? (elementsCount / numberOfConcurrentTasks + 1)
         
         for (index, element) in self.enumerated() {
             currentChunk.append(element)
@@ -268,7 +269,6 @@ extension Sequence where Element: Sendable, Self: Sendable {
         }
     }
     
-    /// S - タスクの結果の取り出し順 == タスクの生成順
     public func pdslInternalForEach<T: Sendable>(
         group: inout ThrowingOrderedTaskGroup<[T], any Error>,
         priority: TaskPriority?,

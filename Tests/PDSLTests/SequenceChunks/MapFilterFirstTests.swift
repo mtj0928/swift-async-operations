@@ -22,7 +22,7 @@ final class MapFilterFirstTests: XCTestCase {
     }
     
     func testMapFilterFirstResultsAreConsistent() async throws {
-        // 標準の同期関数
+        // 標準Sequence処理
         let standardResult = array
             .map(mapOperation)
             .filter(filterOperation)
@@ -41,8 +41,8 @@ final class MapFilterFirstTests: XCTestCase {
             .pdslFirst(where: firstOperation)
         
         // 結果が一致することを確認
-        XCTAssertEqual(standardResult, pdslResult, "標準の同期関数とPDSLの結果が一致しません")
-        XCTAssertEqual(standardResult, pdslChunkedResult, "標準の同期関数とPDSLチャンクの結果が一致しません")
+        XCTAssertEqual(standardResult, pdslResult, "標準Sequence処理とPDSLの結果が一致しません")
+        XCTAssertEqual(standardResult, pdslChunkedResult, "標準Sequence処理とPDSLチャンクの結果が一致しません")
         XCTAssertEqual(pdslResult, pdslChunkedResult, "PDSLとPDSLチャンクの結果が一致しません")
     }
     
