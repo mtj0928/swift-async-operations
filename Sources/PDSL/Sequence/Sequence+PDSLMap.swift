@@ -20,6 +20,27 @@ extension Sequence where Element: Sendable, Self: Sendable {
         return values
     }
     
+    /// 標準の ThrowingTaskGroup を利用
+    public func pMap<T: Sendable>(
+        numberOfConcurrentTasks: Int,
+        priority: TaskPriority? = nil,
+        chunkSize: Int? = nil,
+        _ transform: @escaping @Sendable (Element) async throws -> T
+    ) async rethrows -> [T] {
+        var values: [T] = []
+
+        try await pInternalForEach(
+            numberOfConcurrentTasks: numberOfConcurrentTasks,
+            chunkSize: chunkSize,
+            priority: priority,
+            taskOperation: transform
+        ) { value in
+            values.append(value)
+        }
+
+        return values
+    }
+    
     /// An async function of `map` with chunk size control.
     /// - Parameters:
     ///   - numberOfConcurrentTasks: A number of concurrent tasks. the given `transform` closure run in parallel when the value is 2 or more.
