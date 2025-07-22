@@ -3,7 +3,8 @@
 //
 
 extension Sequence where Element: Sendable, Self: Sendable {
-    /// 標準の ThrowingTaskGroup を利用
+    
+    /// 並行タスク数無制限
     public func v2internalForEach<T: Sendable>(
         chunkSize: Int? = nil,
         priority: TaskPriority? = nil,
@@ -49,7 +50,7 @@ extension Sequence where Element: Sendable, Self: Sendable {
         }
     }
     
-    /// 標準の ThrowingTaskGroup を利用（並行タスク数制限付き）
+    /// 並行タスク数制限の機構あり
     public func v2internalForEach<T: Sendable>(
         numberOfConcurrentTasks: Int,
         chunkSize: Int? = nil,

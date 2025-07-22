@@ -2,7 +2,7 @@ import AsyncOperations
 import Foundation
 
 extension SequenceChunks {
-    public func pdslChunkedMap<T: Sendable>(
+    public func v1ChunkedMap<T: Sendable>(
         priority: TaskPriority? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> T
     ) async rethrows -> ChunkedArray<T> {
@@ -33,7 +33,7 @@ extension SequenceChunks {
         priority: TaskPriority? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> T
     ) async rethrows -> [T] {
-        let chunkedResult = try await pdslChunkedMap(
+        let chunkedResult = try await v1ChunkedMap(
             priority: priority,
             transform
         )

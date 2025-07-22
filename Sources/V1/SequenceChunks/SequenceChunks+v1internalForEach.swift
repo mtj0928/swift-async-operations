@@ -24,7 +24,7 @@ extension SequenceChunks {
         }
     }
 
-    public func pdslChunkedInternalForEach<T: Sendable>(
+    public func v1ChunkedInternalForEach<T: Sendable>(
         group: inout ThrowingOrderedTaskGroup<[T], any Error>,
         priority: TaskPriority?,
         taskOperation: @escaping @Sendable (Element) async throws -> T,
