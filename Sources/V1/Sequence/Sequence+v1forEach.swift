@@ -16,7 +16,7 @@ extension Sequence where Element: Sendable, Self: Sendable {
         _ body: @escaping @Sendable (Element) async throws -> Void
     ) async rethrows {
         try await withThrowingOrderedTaskGroup(of: [Void].self) { group in
-            try await pdslInternalForEach(
+            try await v1internalForEach(
                 group: &group,
                 numberOfConcurrentTasks: numberOfConcurrentTasks,
                 priority: priority,

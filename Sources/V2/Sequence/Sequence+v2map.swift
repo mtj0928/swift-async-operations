@@ -2,17 +2,17 @@
 //  Copyright © 2025 Taichone. All rights reserved.
 //
      
+
 extension Sequence where Element: Sendable, Self: Sendable {
-    public func v0map<T: Sendable>(
-        numberOfConcurrentTasks: Int,
+    /// 標準の ThrowingTaskGroup を利用
+    public func v2map<T: Sendable>(
         priority: TaskPriority? = nil,
         chunkSize: Int? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> T
     ) async rethrows -> [T] {
         var values: [T] = []
 
-        try await v0internalForEach(
-            numberOfConcurrentTasks: numberOfConcurrentTasks,
+        try await v2internalForEach(
             chunkSize: chunkSize,
             priority: priority,
             taskOperation: transform
@@ -23,15 +23,17 @@ extension Sequence where Element: Sendable, Self: Sendable {
         return values
     }
     
-    /// 並行タスク数制限の機構なし
-    public func v0map<T: Sendable>(
+    /// 標準の ThrowingTaskGroup を利用
+    public func v2map<T: Sendable>(
+        numberOfConcurrentTasks: Int,
         priority: TaskPriority? = nil,
         chunkSize: Int? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> T
     ) async rethrows -> [T] {
         var values: [T] = []
 
-        try await v0internalForEach(
+        try await v2internalForEach(
+            numberOfConcurrentTasks: numberOfConcurrentTasks,
             chunkSize: chunkSize,
             priority: priority,
             taskOperation: transform

@@ -28,7 +28,7 @@ extension SequenceChunks {
         }
     }
     
-    public func pdslMap<T: Sendable>(
+    public func v1map<T: Sendable>(
         numberOfConcurrentTasks: Int = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> T

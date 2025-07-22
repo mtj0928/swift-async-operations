@@ -1,72 +1,66 @@
 import AsyncOperations
 
 extension Sequence where Element: Sendable, Self: Sendable {
-    /// An async function of `flatMap` with chunk size control.
+    /// An async function of `map` with chunk size control.
     /// - Parameters:
     ///   - numberOfConcurrentTasks: A number of concurrent tasks. the given `transform` closure run in parallel when the value is 2 or more.
     ///   - priority: The priority of the operation task.
     ///     Omit this parameter or pass `.unspecified`
     ///     to set the child task's priority to the priority of the group.
     ///   - chunkSize: A size of chunk for processing elements.
-    ///   - transform: A similar closure with `flatMap`'s one, but it's async.
+    ///   - transform: A similar closure with `map`'s one, but it's async.
     /// - Returns: A transformed array.
-    public func pdslFlatMap<T: Sendable>(
+    public func v1map<T: Sendable>(
         numberOfConcurrentTasks: Int = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
         chunkSize: Int? = nil,
-        _ transform: @escaping @Sendable (Element) async throws -> [T]
+        _ transform: @escaping @Sendable (Element) async throws -> T
     ) async rethrows -> [T] {
-        try await withThrowingOrderedTaskGroup(of: [[T]].self) { group in
+        try await withThrowingOrderedTaskGroup(of: [T].self) { group in
             var values: [T] = []
 
-            try await pdslInternalForEach(
+            try await v1internalForEach(
                 group: &group,
                 numberOfConcurrentTasks: numberOfConcurrentTasks,
                 priority: priority,
                 chunkSize: chunkSize,
                 taskOperation: transform
-            ) { results in
-                values.append(contentsOf: results)
+            ) { value in
+                values.append(value)
             }
 
             return values
         }
     }
 
-    /// An async function of `flatMap` with chunk size control that returns chunked results.
+    /// An async function of `map` with chunk size control that returns chunked results.
     /// - Parameters:
     ///   - numberOfConcurrentTasks: A number of concurrent tasks. the given `transform` closure run in parallel when the value is 2 or more.
     ///   - priority: The priority of the operation task.
     ///     Omit this parameter or pass `.unspecified`
     ///     to set the child task's priority to the priority of the group.
     ///   - chunkSize: A size of chunk for processing elements.
-    ///   - transform: A similar closure with `flatMap`'s one, but it's async.
+    ///   - transform: A similar closure with `map`'s one, but it's async.
     /// - Returns: A chunked array.
-    public func pdslChunkedFlatMap<T: Sendable>(
-        numberOfConcurrentTasks: Int = numberOfConcurrentTasks,
+    public func v1ChunkedMap<T: Sendable>(
         priority: TaskPriority? = nil,
         chunkSize: Int? = nil,
-        _ transform: @escaping @Sendable (Element) async throws -> [T]
+        _ transform: @escaping @Sendable (Element) async throws -> T
     ) async rethrows -> ChunkedArray<T> {
-        try await withThrowingOrderedTaskGroup(of: [[T]].self) { group in
-            var chunkedValues: [[T]] = []
+        try await withThrowingOrderedTaskGroup(of: [T].self) { group in
+            var resultChunks: [[T]] = []
 
-            try await pdslInternalForEach(
+            try await pdslChunkedInternalForEach(
                 group: &group,
-                numberOfConcurrentTasks: numberOfConcurrentTasks,
                 priority: priority,
                 chunkSize: chunkSize,
                 taskOperation: transform
-            ) { _ in }
-
-            for try await chunk in group {
-                let flattenedChunk = chunk.flatMap { $0 }
-                if !flattenedChunk.isEmpty {
-                    chunkedValues.append(flattenedChunk)
-                }
+            ) {
+                resultChunks.append($0)
             }
 
-            return ChunkedArray(chunks: chunkedValues)
+            return ChunkedArray(chunks: resultChunks)
         }
     }
 }
+

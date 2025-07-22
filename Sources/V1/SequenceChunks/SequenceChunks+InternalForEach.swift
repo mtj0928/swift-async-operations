@@ -1,7 +1,7 @@
 import AsyncOperations
 
 extension SequenceChunks {
-    public func pdslInternalForEach<T: Sendable>(
+    public func v1internalForEach<T: Sendable>(
         group: inout ThrowingOrderedTaskGroup<[T], any Error>,
         priority: TaskPriority?,
         taskOperation: @escaping @Sendable (Element) async throws -> T,

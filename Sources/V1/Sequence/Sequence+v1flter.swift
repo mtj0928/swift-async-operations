@@ -19,7 +19,7 @@ extension Sequence where Element: Sendable, Self: Sendable {
         try await withThrowingOrderedTaskGroup(of: [Element?].self) { group in
             var values: [Element] = []
 
-            try await pdslInternalForEach(
+            try await v1internalForEach(
                 group: &group,
                 numberOfConcurrentTasks: numberOfConcurrentTasks,
                 priority: priority,
@@ -55,7 +55,7 @@ extension Sequence where Element: Sendable, Self: Sendable {
         try await withThrowingOrderedTaskGroup(of: [Element?].self) { group in
             var chunkedValues: [[Element]] = []
 
-            try await pdslInternalForEach(
+            try await v1internalForEach(
                 group: &group,
                 numberOfConcurrentTasks: numberOfConcurrentTasks,
                 priority: priority,

@@ -4,7 +4,7 @@
 
 extension Sequence where Element: Sendable, Self: Sendable {
     /// 標準の ThrowingTaskGroup を利用
-    public func pInternalForEach<T: Sendable>(
+    public func v2internalForEach<T: Sendable>(
         chunkSize: Int? = nil,
         priority: TaskPriority? = nil,
         taskOperation: @escaping @Sendable (Element) async throws -> T,
@@ -50,7 +50,7 @@ extension Sequence where Element: Sendable, Self: Sendable {
     }
     
     /// 標準の ThrowingTaskGroup を利用（並行タスク数制限付き）
-    public func pInternalForEach<T: Sendable>(
+    public func v2internalForEach<T: Sendable>(
         numberOfConcurrentTasks: Int,
         chunkSize: Int? = nil,
         priority: TaskPriority? = nil,
