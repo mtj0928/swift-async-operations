@@ -1,9 +1,6 @@
 //
 //  Copyright © 2025 Taichone. All rights reserved.
 //
-     
-
-import AsyncOperations
 
 extension Sequence where Element: Sendable, Self: Sendable {
     public func pOldInternalForEach<T: Sendable>(
@@ -37,7 +34,7 @@ extension Sequence where Element: Sendable, Self: Sendable {
             for try await chunkResult in group {
                 allResults.append(contentsOf: chunkResult)
             }
-
+            
             // 全要素を index でソート（良くない実装）
             allResults.sort { $0.index < $1.index }
             
@@ -102,3 +99,4 @@ extension Sequence where Element: Sendable, Self: Sendable {
             }
         }
     }
+}

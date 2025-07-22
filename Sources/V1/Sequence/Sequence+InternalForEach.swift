@@ -35,7 +35,6 @@ extension Sequence where Element: Sendable, Self: Sendable {
         }
     }
     
-    /// タスクの結果の取り出し順 == タスクの生成順
     public func pdslChunkedInternalForEach<T: Sendable>(
         group: inout ThrowingOrderedTaskGroup<[T], any Error>,
         priority: TaskPriority?,
