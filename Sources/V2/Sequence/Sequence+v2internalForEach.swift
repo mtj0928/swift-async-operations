@@ -1,0 +1,118 @@
+//
+//  Copyright © 2025 Taichone. All rights reserved.
+//
+
+extension Sequence where Element: Sendable, Self: Sendable {
+    /// 標準の ThrowingTaskGroup を利用
+    public func pInternalForEach<T: Sendable>(
+        chunkSize: Int? = nil,
+        priority: TaskPriority? = nil,
+        taskOperation: @escaping @Sendable (Element) async throws -> T,
+        nextOperation: (T) -> ()
+    ) async rethrows {
+        try await withThrowingTaskGroup(of: (startIndex: Int, results: [T]).self) { group in
+            var currentChunk: [Element] = []
+            let elementsCount = Array(self).count
+            let chunkSize: Int = chunkSize ?? (elementsCount / numberOfConcurrentTasks)
+            
+            for (index, element) in self.enumerated() {
+                currentChunk.append(element)
+                if currentChunk.count == chunkSize || index == elementsCount - 1 {
+                    let chunkToProcess = currentChunk
+                    let startIndex = index - currentChunk.count + 1
+                    group.addTask(priority: priority) {
+                        var results: [T] = []
+                        for element in chunkToProcess {
+                            let result = try await taskOperation(element)
+                            results.append(result)
+                        }
+                        return (startIndex: startIndex, results: results)
+                    }
+                    currentChunk = []
+                }
+            }
+            
+            var chunkedResults: [(startIndex: Int, results: [T])] = []
+            for try await chunkResult in group {
+                chunkedResults.append(chunkResult)
+            }
+            
+            // startIndex でソート
+            chunkedResults.sort { $0.startIndex < $1.startIndex }
+            
+            // 順序を保持して nextOperation を呼び出し
+            for chunkResult in chunkedResults {
+                for value in chunkResult.results {
+                    nextOperation(value)
+                }
+            }
+        }
+    }
+    
+    /// 標準の ThrowingTaskGroup を利用（並行タスク数制限付き）
+    public func pInternalForEach<T: Sendable>(
+        numberOfConcurrentTasks: Int,
+        chunkSize: Int? = nil,
+        priority: TaskPriority? = nil,
+        taskOperation: @escaping @Sendable (Element) async throws -> T,
+        nextOperation: (T) -> ()
+    ) async rethrows {
+        try await withThrowingTaskGroup(of: (startIndex: Int, results: [T]).self) { group in
+            var currentChunk: [Element] = []
+            let elementsCount = Array(self).count
+            let chunkSize: Int = chunkSize ?? (elementsCount / numberOfConcurrentTasks + 1)
+            var availableConcurrentTasks = numberOfConcurrentTasks
+            var pendingResults: [(startIndex: Int, results: [T])] = []
+            var nextExpectedIndex = 0
+            
+            for (index, element) in self.enumerated() {
+                currentChunk.append(element)
+                if currentChunk.count == chunkSize || index == elementsCount - 1 {
+                    
+                    if availableConcurrentTasks == 0 {
+                        if let chunkResult = try await group.next() {
+                            pendingResults.append(chunkResult)
+                            
+                            // 順序を保持して処理可能な結果を nextOperation に渡す
+                            pendingResults.sort { $0.startIndex < $1.startIndex }
+                            while !pendingResults.isEmpty && pendingResults.first!.startIndex == nextExpectedIndex {
+                                let result = pendingResults.removeFirst()
+                                for value in result.results {
+                                    nextOperation(value)
+                                }
+                                nextExpectedIndex += result.results.count
+                            }
+                        }
+                    } else {
+                        availableConcurrentTasks -= 1
+                    }
+                    
+                    let chunkToProcess = currentChunk
+                    let startIndex = index - currentChunk.count + 1
+                    group.addTask(priority: priority) {
+                        var results: [T] = []
+                        for element in chunkToProcess {
+                            let result = try await taskOperation(element)
+                            results.append(result)
+                        }
+                        return (startIndex: startIndex, results: results)
+                    }
+                    currentChunk = []
+                }
+            }
+            
+            // 残りの結果を処理
+            for try await chunkResult in group {
+                pendingResults.append(chunkResult)
+            }
+            
+            // 最終的な順序でソートして処理
+            pendingResults.sort { $0.startIndex < $1.startIndex }
+            for chunkResult in pendingResults {
+                for value in chunkResult.results {
+                    nextOperation(value)
+                }
+            }
+        }
+    }
+}

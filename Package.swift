@@ -7,13 +7,17 @@ let package = Package(
     platforms: [.macOS(.v15), .iOS(.v18), .watchOS(.v11), .macCatalyst(.v18), .tvOS(.v18), .visionOS(.v2)],
     products: [
         .library(name: "AsyncOperations", targets: ["AsyncOperations"]),
-        .library(name: "PDSL", targets: ["PDSL"]),
+        .library(name: "V0", targets: ["V0"]),
+        .library(name: "V1", targets: ["V1"]),
+        .library(name: "V2", targets: ["V2"]),
     ],
     targets: [
         .target(name: "AsyncOperations"),
         .testTarget(name: "AsyncOperationsTests", dependencies: ["AsyncOperations"]),
-        .target(name: "PDSL", dependencies: ["AsyncOperations"]),
-        .testTarget(name: "PDSLTests", dependencies: ["PDSL", "AsyncOperations"]),
+        .target(name: "V0"),
+        .target(name: "V1", dependencies: ["AsyncOperations"]),
+        .target(name: "V2"),
+        .testTarget(name: "PDSLTests", dependencies: ["V0", "V1", "V2", "AsyncOperations"]),
     ]
 )
 
