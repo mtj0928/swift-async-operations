@@ -1,7 +1,7 @@
 import AsyncOperations
 import Foundation
 
-extension SequenceChunksV1 {
+extension SequenceChunks {
     /// Finds the first element that satisfies the given predicate.
     /// - Parameters:
     ///   - priority: The priority of the operation task.

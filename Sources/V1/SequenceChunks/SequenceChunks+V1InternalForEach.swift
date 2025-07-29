@@ -1,6 +1,6 @@
 import AsyncOperations
 
-extension SequenceChunksV1 {
+extension SequenceChunks {
     public func v1InternalForEach<T: Sendable>(
         group: inout ThrowingOrderedTaskGroup<[T], any Error>,
         priority: TaskPriority?,

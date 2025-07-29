@@ -1,7 +1,7 @@
 import AsyncOperations
 import Foundation
 
-extension SequenceChunksV1 {
+extension SequenceChunks {
     /// Executes a closure for each element in the sequence.
     /// - Parameters:
     ///   - numberOfConcurrentTasks: A number of concurrent tasks.

@@ -1,7 +1,7 @@
 import AsyncOperations
 import Foundation
 
-extension SequenceChunksV1 {
+extension SequenceChunks {
     /// Filters each element with given predicate and returns chunked results.
     /// - Parameters:
     ///   - numberOfConcurrentTasks: A number of concurrent tasks.

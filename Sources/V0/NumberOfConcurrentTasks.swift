@@ -4,7 +4,7 @@
 
 import Foundation
 
-let numberOfConcurrentTasks: Int = {
+public let numberOfConcurrentTasks: Int = {
     let processorCount = ProcessInfo.processInfo.processorCount
     print("Processor Count: \(processorCount)")
     return Int(max(1, processorCount))

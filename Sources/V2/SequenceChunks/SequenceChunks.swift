@@ -4,13 +4,13 @@
 
 import Foundation
 
-public protocol SequenceChunks: Sendable {
+public protocol SequenceChunksV2: Sendable {
     associatedtype Element: Sendable
     var chunks: [[Element]] { get }
     init(chunks: [[Element]])
 }
 
-public struct ChunkedArray<Element: Sendable>: SequenceChunks {
+public struct SequenceChunks<Element: Sendable>: SequenceChunksV2 {
     public let chunks: [[Element]]
     
     public init(chunks: [[Element]]) {
