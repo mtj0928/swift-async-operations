@@ -1,4 +1,7 @@
-import AsyncOperations
+//
+//  Copyright © 2025 Taichone. All rights reserved.
+//
+
 import Foundation
 
 public protocol SequenceChunks: Sendable {

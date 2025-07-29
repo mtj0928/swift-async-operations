@@ -3,7 +3,7 @@
 //
      
 extension Sequence where Element: Sendable, Self: Sendable {
-    public func v0map<T: Sendable>(
+    public func v0Map<T: Sendable>(
         numberOfConcurrentTasks: Int,
         priority: TaskPriority? = nil,
         chunkSize: Int? = nil,
@@ -31,7 +31,7 @@ extension Sequence where Element: Sendable, Self: Sendable {
     ) async rethrows -> [T] {
         var values: [T] = []
 
-        try await v0internalForEach(
+        try await v0InternalForEach(
             chunkSize: chunkSize,
             priority: priority,
             taskOperation: transform

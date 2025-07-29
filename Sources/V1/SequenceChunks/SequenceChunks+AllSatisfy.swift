@@ -1,7 +1,7 @@
 import AsyncOperations
 import Foundation
 
-extension SequenceChunks {
+extension SequenceChunksV1 {
     /// Checks if all elements in the sequence satisfy the given predicate.
     /// - Parameters:
     ///   - priority: The priority of the operation task.

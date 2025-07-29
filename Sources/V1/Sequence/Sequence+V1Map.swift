@@ -10,7 +10,7 @@ extension Sequence where Element: Sendable, Self: Sendable {
     ///   - chunkSize: A size of chunk for processing elements.
     ///   - transform: A similar closure with `map`'s one, but it's async.
     /// - Returns: A transformed array.
-    public func v1map<T: Sendable>(
+    public func v1Map<T: Sendable>(
         numberOfConcurrentTasks: Int = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
         chunkSize: Int? = nil,

@@ -1,7 +1,7 @@
 import AsyncOperations
 import Foundation
 
-extension SequenceChunks {
+extension SequenceChunksV1 {
     public func v1ChunkedMap<T: Sendable>(
         priority: TaskPriority? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> T
@@ -28,7 +28,7 @@ extension SequenceChunks {
         }
     }
     
-    public func v1map<T: Sendable>(
+    public func v1Map<T: Sendable>(
         numberOfConcurrentTasks: Int = numberOfConcurrentTasks,
         priority: TaskPriority? = nil,
         _ transform: @escaping @Sendable (Element) async throws -> T

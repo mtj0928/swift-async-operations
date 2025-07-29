@@ -29,15 +29,15 @@ import Testing
     )
     
     let v0mapResult = await array.v0map(mapOperation)
-    let v0mapLimitedResult = await array.v0map(
+    let v0mapLimitedResult = await array.v0Map(
         numberOfConcurrentTasks: 3,
         mapOperation
     )
-    let v1mapLimitedResult = await array.v1map(
+    let v1mapLimitedResult = await array.v1Map(
         numberOfConcurrentTasks: 3,
         mapOperation
     )
-    let v1mapResult = await array.v1map(mapOperation)
+    let v1mapResult = await array.v1Map(mapOperation)
     
     let v2mapResult = await array.v2map(mapOperation)
     let v2mapLimitedResult = await array.v2map(

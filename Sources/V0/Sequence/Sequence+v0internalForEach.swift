@@ -3,7 +3,7 @@
 //
 
 extension Sequence where Element: Sendable, Self: Sendable {
-    public func v0internalForEach<T: Sendable>(
+    public func v0InternalForEach<T: Sendable>(
         chunkSize: Int? = nil,
         priority: TaskPriority? = nil,
         taskOperation: @escaping @Sendable (Element) async throws -> T,
