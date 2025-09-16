@@ -11,13 +11,25 @@ jobs:
     strategy:
       matrix:
         swift_version:
-          - "5.10.0"
+          - "5.10"
           - "6.0"
+          - "6.1"
+          - "6.2"
     runs-on: macos-latest
     steps:
-    - uses: SwiftyLab/setup-swift@latest
-      with:
-        swift-version: ${{ matrix.swift_version }}
+    - name: Install Swiftly
+      run: |
+        curl -O https://download.swift.org/swiftly/darwin/swiftly.pkg 
+        installer -pkg swiftly.pkg -target CurrentUserHomeDirectory
+        ~/.swiftly/bin/swiftly init --quiet-shell-followup
+        . "${SWIFTLY_HOME_DIR:-$HOME/.swiftly}/env.sh"
+        hash -r
+    - name: Add Swiftly to PATH
+      run: echo "${HOME}/.swiftly/bin" >> "${GITHUB_PATH}"
+    - name: Install Swift
+      run: ~/.swiftly/bin/swiftly install ${{ matrix.swift_version }}
+    - name: Get swift version
+      run: swift --version
     - uses: actions/checkout@v4
     - name: Run tests
       run: swift test
