@@ -184,3 +184,6 @@ dependencies: [
 
 ## Documentation
 Please see [the DocC pages](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/)
+
+## Achievements
+- Nominated for the [Swift.org Community Showcase (November 2024)](https://www.swift.org/packages/showcase-november-2024.html).
