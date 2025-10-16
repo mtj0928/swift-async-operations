@@ -32,7 +32,7 @@ extension AsyncSequence where Element: Sendable {
         priority: TaskPriority? = nil,
         _ body: @escaping @Sendable (Element) async throws -> Void
     ) async rethrows {
-        try await withThrowingOrderedTaskGroup(of: Void.self) { group in
+        try await withThrowingTaskGroup(of: Void.self) { group in
             var counter = 0
             var asyncIterator = self.makeAsyncIterator()
             while let element = try await asyncIterator.next() {

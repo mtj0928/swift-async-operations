@@ -129,5 +129,3 @@ let results = await withOrderedTaskGroup(of: Int.self) { group in
 print(results) // 😁 [0, 2, 4, 6, 8, 10]
 ```
 
-They are also used for async functions of `Sequence`.
-
