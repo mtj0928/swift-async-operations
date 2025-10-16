@@ -34,7 +34,7 @@ final class SequenceAsyncForEachTests: XCTestCase {
         try await (0..<numberOfElements).asyncForEach(numberOfConcurrentTasks: UInt(numberOfConcurrentTasks)) { @MainActor number in
             events.append(.start)
             let offsets = randomOffsets[number]
-            try await Task.sleep(for: .milliseconds(10 * offsets))
+            try await Task.sleep(for: .milliseconds(100 * offsets))
             events.append(.end)
         }
         XCTAssertEqual(Array(events.prefix(numberOfConcurrentTasks)), Array(repeating: .start, count: numberOfConcurrentTasks))
