@@ -10,7 +10,7 @@ extension Sequence where Element: Sendable {
         priority: TaskPriority? = nil,
         _ isIncluded: @escaping @Sendable (Element) async throws -> Bool
     ) async rethrows -> [Element] {
-        try await withThrowingOrderedTaskGroup(of: Element?.self) { group in
+        try await withThrowingTaskGroup(of: (Element?, Int).self) { group in
             var values: [Element] = []
 
             try await internalForEach(
