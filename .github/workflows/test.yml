@@ -27,7 +27,7 @@ jobs:
     - name: Add Swiftly to PATH
       run: echo "${HOME}/.swiftly/bin" >> "${GITHUB_PATH}"
     - name: Install Swift
-      run: ~/.swiftly/bin/swiftly install ${{ matrix.swift_version }}
+      run: ~/.swiftly/bin/swiftly install --use ${{ matrix.swift_version }}
     - name: Get swift version
       run: swift --version
     - uses: actions/checkout@v4
