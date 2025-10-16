@@ -172,7 +172,7 @@ print(results) // 😁 [0, 2, 4, 6, 8, 10]
 ```
 
 ## Requirements
-Swift 5.10 or later.
+Swift 6.0 or later.
 
 ## Installation
 You can install the library via Swift Package Manager.
