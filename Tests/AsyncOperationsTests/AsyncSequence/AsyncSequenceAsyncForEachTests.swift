@@ -3,7 +3,7 @@ import Testing
 
 struct AsyncSequenceAsyncForEachTests {
 
-    @Test
+    @Test(.timeLimit(.minutes(1)))
     @MainActor
     func asyncForEach() async throws {
         var results: [Int] = []
@@ -14,9 +14,17 @@ struct AsyncSequenceAsyncForEachTests {
             c.finish()
         }
 
-        try await asyncSequence.asyncForEach(numberOfConcurrentTasks: 3) { @MainActor number in
+        let eventPublisher = EventPublisher()
+
+        Task {
+            for number in [2, 1, 0, 3, 4] {
+                await eventPublisher.send(number)
+                try await Task.sleep(for: .milliseconds(100))
+            }
+        }
+        await asyncSequence.asyncForEach(numberOfConcurrentTasks: 3) { @MainActor number in
             events.append(.start)
-            try await Task.sleep(for: .milliseconds(100 * (5 - number)))
+            await eventPublisher.wait(for: number)
             events.append(.end)
             results.append(number)
         }
