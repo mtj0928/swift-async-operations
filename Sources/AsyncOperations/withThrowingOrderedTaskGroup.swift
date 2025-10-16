@@ -1,4 +1,3 @@
-#if compiler(>=6.0)
 /// A wrapper function of `withThrowingTaskGroup`.
 ///
 /// The main difference with `withThrowingTaskGroup` is that the group's next function returns the results in the order the tasks were added.
@@ -36,21 +35,6 @@ public func withThrowingOrderedTaskGroup<ChildTaskResult: Sendable, GroupResult>
         return try await body(&throwingOrderedTaskGroup)
     }
 }
-#else
-public func withThrowingOrderedTaskGroup<ChildTaskResult: Sendable, GroupResult>(
-    of childTaskResultType: ChildTaskResult.Type,
-    returning returnType: GroupResult.Type = GroupResult.self,
-    body: (inout ThrowingOrderedTaskGroup<ChildTaskResult, any Error>) async throws -> GroupResult
-) async rethrows -> GroupResult {
-    try await withThrowingTaskGroup(
-        of: (Index, ChildTaskResult).self,
-        returning: GroupResult.self
-    ) { group in
-        var throwingOrderedTaskGroup = ThrowingOrderedTaskGroup<ChildTaskResult, any Error>(group)
-        return try await body(&throwingOrderedTaskGroup)
-    }
-}
-#endif
 
 public struct ThrowingOrderedTaskGroup<ChildTaskResult: Sendable, Failure: Error> {
     private var internalGroup: ThrowingTaskGroup<(Index, ChildTaskResult), Failure>
@@ -62,7 +46,6 @@ public struct ThrowingOrderedTaskGroup<ChildTaskResult: Sendable, Failure: Error
         self.internalGroup = internalGroup
     }
 
-#if compiler(>=6.0)
     public mutating func addTask(
         priority: TaskPriority? = nil,
         operation: sending @escaping @isolated(any) () async throws(Failure) -> ChildTaskResult
@@ -78,23 +61,6 @@ public struct ThrowingOrderedTaskGroup<ChildTaskResult: Sendable, Failure: Error
         }
         addedTaskIndex = addedTaskIndex.next()
     }
-#else
-    public mutating func addTask(
-        priority: TaskPriority? = nil,
-        operation: @escaping @Sendable () async throws -> ChildTaskResult
-    ) {
-        let currentIndex = addedTaskIndex
-        internalGroup.addTask(priority: priority) {
-            do {
-                let result = try await operation()
-                return (currentIndex, result)
-            } catch {
-                throw InternalError(index: currentIndex, rawError: error)
-            }
-        }
-        addedTaskIndex = addedTaskIndex.next()
-    }
-#endif
 
     public mutating func waitForAll() async throws {
         do {

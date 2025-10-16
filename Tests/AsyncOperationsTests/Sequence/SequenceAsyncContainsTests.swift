@@ -1,17 +1,19 @@
 import AsyncOperations
-import XCTest
+import Testing
 
-final class SequenceAsyncContainsTests: XCTestCase {
-    func testAsyncContains() async throws {
+struct SequenceAsyncContainsTests {
+
+    @Test
+    func asyncContains() async throws {
         let containsResult = await [1, 2, 3].asyncContains { number in
-            XCTAssertNotEqual(number, 3)
+            #expect(number != 3)
             return number == 2
         }
-        XCTAssertTrue(containsResult)
+        #expect(containsResult)
 
         let notContainsResult = await [1, 2, 3].asyncContains { number in
             return number == 4
         }
-        XCTAssertFalse(notContainsResult)
+        #expect(!notContainsResult)
     }
 }

@@ -1,21 +1,24 @@
 import AsyncOperations
-import XCTest
+import Testing
 
-final class SequenceAsyncReduceTests: XCTestCase {
+@Suite
+struct SequenceAsyncReduceTests {
+    @Test
     func asyncReduce() async throws {
         let results = await [1, 2, 3, 4, 5].asyncReduce(0) { result, element in
             await Task.yield()
             return result + element
         }
-        XCTAssertEqual(results, 15)
+        #expect(results == 15)
     }
 
 
-    func testAsyncReduceInto() async throws {
+    @Test
+    func asyncReduceInto() async throws {
         let results = await [1, 2, 3, 4, 5].asyncReduce(into: 0) { result, element in
             await Task.yield()
             result += element
         }
-        XCTAssertEqual(results, 15)
+        #expect(results == 15)
     }
 }
