@@ -9,7 +9,7 @@ extension Sequence where Element: Sendable {
         priority: TaskPriority? = nil,
         _ body: @escaping @Sendable (Element) async throws -> Void
     ) async rethrows {
-        try await withThrowingOrderedTaskGroup(of: Void.self) { group in
+        try await withThrowingTaskGroup(of: (Void, Int).self) { group in
             try await internalForEach(
                 group: &group,
                 numberOfConcurrentTasks: numberOfConcurrentTasks,

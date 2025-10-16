@@ -14,7 +14,7 @@ final class SequenceAsyncMapTests: XCTestCase {
         let difference = endTime.timeIntervalSince(startTime)
 
         XCTAssertEqual(results, [0, 2, 4, 6, 8])
-        XCTAssertLessThan(difference, 4)
+        XCTAssertLessThan(difference, 2)
     }
 
     func testAsyncMapMultipleTasksWithNumberOfConcurrentTasks() async throws {
