@@ -1,9 +1,11 @@
 import AsyncOperations
-import XCTest
+import Testing
 
-final class AsyncSequenceAsyncForEachTests: XCTestCase {
+struct AsyncSequenceAsyncForEachTests {
+
+    @Test
     @MainActor
-    func testAsyncForEach() async throws {
+    func asyncForEach() async throws {
         var results: [Int] = []
         var events: [ConcurrentTaskEvent] = []
 
@@ -18,8 +20,8 @@ final class AsyncSequenceAsyncForEachTests: XCTestCase {
             events.append(.end)
             results.append(number)
         }
-        XCTAssertEqual(results.count, 5)
-        XCTAssertEqual(Set(results), [0, 1, 2, 3, 4])
-        XCTAssertEqual(events, [.start, .start, .start, .end, .start, .end, .start, .end, .end, .end])
+        #expect(results.count == 5)
+        #expect(Set(results) == [0, 1, 2, 3, 4])
+        #expect(events == [.start, .start, .start, .end, .start, .end, .start, .end, .end, .end])
     }
 }

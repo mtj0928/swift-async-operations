@@ -1,7 +1,8 @@
 import AsyncOperations
-import XCTest
+import Testing
 
-final class WithThrowingOrderedTaskGroupTests: XCTestCase {
+struct WithThrowingOrderedTaskGroupTests {
+    @Test
     func testWithThrowingOrderedTaskGroup() async throws {
         let results = try await withThrowingOrderedTaskGroup(of: Int.self) { group in
             (0..<10).forEach { number in
@@ -17,11 +18,12 @@ final class WithThrowingOrderedTaskGroupTests: XCTestCase {
             return results
         }
 
-        XCTAssertEqual(results, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+        #expect(results == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
     }
 
-    func testWithThrowingOrderedTaskGroupOnFailure() async throws {
-        do {
+    @Test
+    func withThrowingOrderedTaskGroupOnFailure() async throws {
+        await #expect(throws: DummyError.self) {
             _ = try await withThrowingOrderedTaskGroup(of: Int.self) { group in
                 (0..<10).forEach { number in
                     group.addTask {
@@ -36,13 +38,11 @@ final class WithThrowingOrderedTaskGroupTests: XCTestCase {
                 }
                 return results
             }
-            XCTFail("DummyError should be thrown.")
-        } catch is DummyError {
-            // Expected
         }
     }
 
-    func testWithThrowingOrderedTaskGroupByIgnoreError() async throws {
+    @Test
+    func withThrowingOrderedTaskGroupByIgnoreError() async throws {
         let results = try await withThrowingOrderedTaskGroup(of: Int.self) { group in
             (0..<10).forEach { number in
                 group.addTask {
@@ -61,7 +61,7 @@ final class WithThrowingOrderedTaskGroupTests: XCTestCase {
             }
             return results
         }
-        XCTAssertEqual(results, [0, 1, 2, 3, 4])
+        #expect(results == [0, 1, 2, 3, 4])
     }
 }
 

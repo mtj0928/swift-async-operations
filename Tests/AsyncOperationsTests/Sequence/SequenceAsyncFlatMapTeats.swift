@@ -1,12 +1,14 @@
 import AsyncOperations
-import XCTest
+import Testing
 
-final class SequenceAsyncFlatMapTeats: XCTestCase {
-    func testAsyncFlatMap() async throws {
+struct SequenceAsyncFlatMapTeats {
+
+    @Test
+    func asyncFlatMap() async throws {
         let results = await [0, 1, 2, 3, 4].asyncFlatMap { number in
             await Task.yield()
             return [number, number * 2]
         }
-        XCTAssertEqual(results, [0, 0, 1, 2, 2, 4, 3, 6, 4, 8])
+        #expect(results == [0, 0, 1, 2, 2, 4, 3, 6, 4, 8])
     }
 }

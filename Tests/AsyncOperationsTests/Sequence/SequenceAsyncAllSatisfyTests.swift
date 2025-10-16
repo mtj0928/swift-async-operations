@@ -1,18 +1,19 @@
 import AsyncOperations
-import XCTest
+import Testing
 
-final class SequenceAsyncAllSatisfyTests: XCTestCase {
-    func testAsyncAllSatisfy() async throws {
+struct SequenceAsyncAllSatisfyTests {
+    @Test
+    func asyncAllSatisfy() async throws {
         let satisfiedResult = await [0, 1, 2, 3, 4].asyncAllSatisfy { number in
             await Task.yield()
             return number < 5
         }
-        XCTAssertTrue(satisfiedResult)
+        #expect(satisfiedResult)
 
         let unsatisfiedResult = await [0, 1, 2, 3, 4].asyncAllSatisfy { number in
             await Task.yield()
             return number < 4
         }
-        XCTAssertFalse(unsatisfiedResult)
+        #expect(!unsatisfiedResult)
     }
 }

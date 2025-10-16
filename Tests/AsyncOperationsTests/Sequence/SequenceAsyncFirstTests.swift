@@ -1,18 +1,20 @@
 import AsyncOperations
-import XCTest
+import Testing
 
-final class SequenceAsyncFirstTests: XCTestCase {
-    func testAsyncFirst() async throws {
+struct SequenceAsyncFirstTests {
+
+    @Test
+    func asyncFirst() async throws {
         let containResult = await [0, 1, 2, 3, 4].asyncFirst(numberOfConcurrentTasks: 8) { number in
             await Task.yield()
             return number % 2 == 1
         }
-        XCTAssertEqual(containResult, 1)
+        #expect(containResult == 1)
 
         let notContainResult = await [0, 1, 2, 3, 4].asyncFirst { number in
             await Task.yield()
             return number == 5
         }
-        XCTAssertNil(notContainResult)
+        #expect(notContainResult == nil)
     }
 }

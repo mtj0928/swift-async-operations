@@ -1,9 +1,11 @@
 import AsyncOperations
 import Foundation
-import XCTest
+import Testing
 
-final class SequenceAsyncMapTests: XCTestCase {
-    func testAsyncMapMultipleTasks() async throws {
+struct SequenceAsyncMapTests {
+
+    @Test
+    func asyncMapMultipleTasks() async throws {
         let startTime = Date()
         let results = try await [0, 1, 2, 3, 4].asyncMap(numberOfConcurrentTasks: 8) { number in
             try await Task.sleep(for: .seconds(1))
@@ -13,21 +15,22 @@ final class SequenceAsyncMapTests: XCTestCase {
         let endTime = Date()
         let difference = endTime.timeIntervalSince(startTime)
 
-        XCTAssertEqual(results, [0, 2, 4, 6, 8])
-        XCTAssertLessThan(difference, 2)
+        #expect(results == [0, 2, 4, 6, 8])
+        #expect(difference < 2)
     }
 
-    func testAsyncMapMultipleTasksWithNumberOfConcurrentTasks() async throws {
+    @Test
+    func asyncMapMultipleTasksWithNumberOfConcurrentTasks() async throws {
         let counter = Counter()
         let results = await [0, 1, 2, 3, 4].asyncMap(numberOfConcurrentTasks: 2) { number in
             await counter.increment()
             let numberOfConcurrentTasks = await counter.number
-            XCTAssertLessThanOrEqual(numberOfConcurrentTasks, 2)
+            #expect(numberOfConcurrentTasks <= 2)
             await counter.decrement()
             return number * 2
         }
 
-        XCTAssertEqual(results, [0, 2, 4, 6, 8])
+        #expect(results == [0, 2, 4, 6, 8])
     }
 }
 
