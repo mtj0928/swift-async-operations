@@ -131,6 +131,9 @@ This library provides
     - [asyncReduce](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/sequence/asyncreduce(into:_:))
 - AsyncSequence
     - [asyncForEach](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/_concurrency/asyncsequence/asyncforeach(numberofconcurrenttasks:priority:_:))
+- Optional
+    - [asyncMap](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/optional/asyncmap(_:))
+    - [asyncFlatMap](https://mtj0928.github.io/swift-async-operations/documentation/asyncoperations/swift/optional/asyncflatmap(_:))
 
 ### Ordered Task Group
 The original utility function `withTaskGroup` and `withThrowingTaskGroup` don't ensure the order of `for await`.
